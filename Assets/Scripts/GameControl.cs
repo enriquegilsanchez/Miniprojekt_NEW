@@ -38,7 +38,6 @@ public class GameControl : MonoBehaviour
         Timer_Display.text = string.Format("{0:00}:{1:00}", Minutes, Seconds);
         if (Health <= 0)
         {
-            int i = 1;
             GameOver.SetActive(true);
             Time.timeScale = 0;
         }
