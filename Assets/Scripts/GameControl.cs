@@ -58,7 +58,7 @@ public class GameControl : MonoBehaviour
     {
         Time.timeScale = 1;
         Score = 0;
-        PlayerHealth = pc.maxHealth;
+        PlayerHealth = 5;
         HealthBar.maxValue = PlayerHealth;
         HealthBar.value = PlayerHealth;
         GameOver.SetActive(false);

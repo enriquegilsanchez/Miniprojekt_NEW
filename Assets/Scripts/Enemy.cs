@@ -17,6 +17,9 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rb;
     Vector2 movement;
 
+    private float iFrame = 1f;
+    private float time = 0f;
+
     [SerializeField]
     int health;
     void Start()
@@ -50,6 +53,20 @@ public class Enemy : MonoBehaviour
         animator.SetFloat("speed", rb.velocity.magnitude);
     }
 
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        time += Time.deltaTime;
+        if (time >= iFrame)
+        {
+            time = 0f;
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                GameControl.SendMessage("GetHp");
+                Player.SendMessage("ChangeHp", -1);
+            }
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -57,9 +74,7 @@ public class Enemy : MonoBehaviour
             GameControl.SendMessage("GetHp");
             Player.SendMessage("ChangeHp", -1);
         }
-
     }
-
     public void ChangeHp(int val)
     {
         health += val;
