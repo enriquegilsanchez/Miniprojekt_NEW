@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Animation
+  m_Name: skeleton_armed_idle
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,19 +21,19 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -518297616, guid: cdbe4f81f6d0fc44fb7f1ed567f3094d, type: 3}
-    - time: 0.125
-      value: {fileID: 993504909, guid: cdbe4f81f6d0fc44fb7f1ed567f3094d, type: 3}
+      value: {fileID: -7882062, guid: 209b8bce09950d74294c7900891a7daf, type: 3}
+    - time: 0.083333336
+      value: {fileID: -201887017, guid: 209b8bce09950d74294c7900891a7daf, type: 3}
+    - time: 0.16666667
+      value: {fileID: 2099345801, guid: 209b8bce09950d74294c7900891a7daf, type: 3}
     - time: 0.25
-      value: {fileID: -347121835, guid: cdbe4f81f6d0fc44fb7f1ed567f3094d, type: 3}
-    - time: 0.375
-      value: {fileID: 272451248, guid: cdbe4f81f6d0fc44fb7f1ed567f3094d, type: 3}
+      value: {fileID: 557738673, guid: 209b8bce09950d74294c7900891a7daf, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 8
+  m_SampleRate: 12
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -50,16 +50,16 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -518297616, guid: cdbe4f81f6d0fc44fb7f1ed567f3094d, type: 3}
-    - {fileID: 993504909, guid: cdbe4f81f6d0fc44fb7f1ed567f3094d, type: 3}
-    - {fileID: -347121835, guid: cdbe4f81f6d0fc44fb7f1ed567f3094d, type: 3}
-    - {fileID: 272451248, guid: cdbe4f81f6d0fc44fb7f1ed567f3094d, type: 3}
+    - {fileID: -7882062, guid: 209b8bce09950d74294c7900891a7daf, type: 3}
+    - {fileID: -201887017, guid: 209b8bce09950d74294c7900891a7daf, type: 3}
+    - {fileID: 2099345801, guid: 209b8bce09950d74294c7900891a7daf, type: 3}
+    - {fileID: 557738673, guid: 209b8bce09950d74294c7900891a7daf, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 0.33333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour
 {
-    public static int Score = 0;
-    public static float Health = 3;
+    public int Score = 0;
+    public float Health = 3;
 
     public Text TXTScore;
     public Text Timer_Display;
@@ -63,5 +63,10 @@ public class GameControl : MonoBehaviour
     public void GetHp()
     {
         Debug.Log("Hp: " + Health);
+    }
+
+    public void ChangeScore(int val)
+    {
+        Score += val;
     }
 }

@@ -10,25 +10,21 @@ public class Fire : MonoBehaviour
     {
         Destroy(gameObject, 2.0f);
     }
-   
+
     void Update()
     {
-        
+
     }
 
-    void OnCollisionEnter2D(Collision2D col) {
-
+    void OnCollisionEnter2D(Collision2D collision)
+    {
         GameObject Exp = Instantiate(Explosion, transform.position, transform.rotation);
         Destroy(Exp, 1f);
         Destroy(gameObject);
-
-        if (col.gameObject.tag == "Zombie") {
-            GameObject bloodeffect = Instantiate(Blood, col.transform.position, col.transform.rotation);
-            Destroy(bloodeffect.gameObject, 0.8f);
-            Destroy(col.gameObject);
-            GameControl.Score++;
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy hit" + collision.gameObject.name);
+            collision.gameObject.SendMessage("ChangeHp", -1);
         }
-
-
     }
 }
