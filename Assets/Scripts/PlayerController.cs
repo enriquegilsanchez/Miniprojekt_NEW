@@ -7,12 +7,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 10f;
+    public float maxHealth = 5;
+    public float health = 5;
     public Rigidbody2D rb;
     public Animator animator;
     public Weapon weapon;
     public Transform firePoint;
     UnityEngine.Vector2 moveDirection;
     UnityEngine.Vector2 mousePosition;
+    private SpriteRenderer spriteRenderer;
 
     private bool canDash = true;
     private bool isDashing;
@@ -25,26 +28,38 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        health = maxHealth;
+        animator.SetFloat("hp", health);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isDashing)
-        {
-            return;
-        }
-
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
         moveDirection = new UnityEngine.Vector2(moveX, moveY).normalized;
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (moveDirection.x <= 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             weapon.Shoot();
             Debug.Log(mousePosition);
+        }
+
+        if (isDashing)
+        {
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && canDash)
@@ -77,7 +92,15 @@ public class PlayerController : MonoBehaviour
         }
         rb.velocity = new UnityEngine.Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
         animator.SetFloat("speed", rb.velocity.magnitude);
+    }
 
+    public void ChangeHp(int val)
+    {
+        health += val;
+        animator.SetFloat("hp", health);
+        if (health <= 0)
+        {
 
+        }
     }
 }

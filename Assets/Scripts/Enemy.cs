@@ -12,17 +12,20 @@ public class Enemy : MonoBehaviour
 
     Component GameControl;
     public Animator animator;
+    private SpriteRenderer spriteRenderer;
     float moveSpeed = 3f;
     Rigidbody2D rb;
     Vector2 movement;
 
     [SerializeField]
-    int Health;
+    int health;
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.FindGameObjectWithTag("Player");
         GameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
+        animator.SetFloat("hp", health);
     }
 
     void Update()
@@ -30,6 +33,14 @@ public class Enemy : MonoBehaviour
         PlayerPos = Player.transform.position;
         Vector3 direction = PlayerPos - transform.position;
         direction.Normalize();
+        if (direction.x <= 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
         movement = direction;
 
     }
@@ -44,15 +55,16 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             GameControl.SendMessage("GetHp");
-            GameControl.SendMessage("ChangeHp", -1);
+            Player.SendMessage("ChangeHp", -1);
         }
 
     }
 
     public void ChangeHp(int val)
     {
-        Health += val;
-        if (Health <= 0)
+        health += val;
+        animator.SetFloat("hp", health);
+        if (health <= 0)
         {
             // Dont need blood for skeletons
             // GameObject bloodeffect = Instantiate(Blood, transform.position, transform.rotation);

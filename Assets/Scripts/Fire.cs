@@ -30,8 +30,9 @@ public class Fire : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Player_Bullet"))
         {
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<BoxCollider2D>());
             return;
         }
         GameObject Exp = Instantiate(Explosion, transform.position, transform.rotation);

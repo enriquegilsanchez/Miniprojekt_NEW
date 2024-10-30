@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GameControl : MonoBehaviour
 {
     public int Score = 0;
-    public float Health = 3;
+    public float PlayerHealth;
 
     public Text TXTScore;
     public Text Timer_Display;
@@ -16,27 +16,37 @@ public class GameControl : MonoBehaviour
     public float Seconds;
     public float Timer;
     public Slider HealthBar;
+    private GameObject Player;
+    private PlayerController pc;
 
     public GameObject GameOver;
 
     void Start()
     {
         Score = 0;
-        Health = 5;
-        HealthBar.maxValue = Health;
-        HealthBar.value = Health;
         GameOver.SetActive(false);
+        Player = GameObject.FindGameObjectWithTag("Player");
+        pc = Player.GetComponent<PlayerController>();
+        PlayerHealth = 5;
+        HealthBar.maxValue = PlayerHealth;
+        HealthBar.value = PlayerHealth;
+        Debug.Log("playerHealth:" + PlayerHealth);
+        Debug.Log("healthbarvalue:" + HealthBar.value);
     }
 
     void Update()
     {
-        HealthBar.value = Health;
+        PlayerHealth = pc.health;
+        // Debug.Log("playerHealth:" + PlayerHealth);
+
+        HealthBar.value = PlayerHealth;
+        // Debug.Log("healthbarvalue:" + HealthBar.value);
         TXTScore.text = Score.ToString();
         Timer += Time.deltaTime;
         Minutes = Mathf.FloorToInt(Timer / 60);
         Seconds = Mathf.FloorToInt(Timer % 60);
         Timer_Display.text = string.Format("{0:00}:{1:00}", Minutes, Seconds);
-        if (Health <= 0)
+        if (PlayerHealth <= 0)
         {
             GameOver.SetActive(true);
             Time.timeScale = 0;
@@ -48,21 +58,18 @@ public class GameControl : MonoBehaviour
     {
         Time.timeScale = 1;
         Score = 0;
-        Health = 5;
-        HealthBar.maxValue = Health;
-        HealthBar.value = Health;
+        PlayerHealth = pc.maxHealth;
+        HealthBar.maxValue = PlayerHealth;
+        HealthBar.value = PlayerHealth;
         GameOver.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ChangeHp(int val)
-    {
-        Health += val;
-    }
+
 
     public void GetHp()
     {
-        Debug.Log("Hp: " + Health);
+        Debug.Log("Hp: " + PlayerHealth);
     }
 
     public void ChangeScore(int val)

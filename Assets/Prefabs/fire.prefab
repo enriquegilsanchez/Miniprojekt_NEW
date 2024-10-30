@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5950504506233228619}
   m_Layer: 0
   m_Name: fire
-  m_TagString: Untagged
+  m_TagString: Player_Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,3 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Explosion: {fileID: 5346074515778516595, guid: 531f95505eedd584b867ee26dacd2cad, type: 3}
   Blood: {fileID: 8252751822349446366, guid: 57ac6f1d46dbc074f8dc76f2e7eeb38b, type: 3}
+  fireForce: 40
