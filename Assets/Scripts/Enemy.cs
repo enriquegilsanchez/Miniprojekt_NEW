@@ -6,12 +6,13 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    Transform PlayerPos;
+    Vector3 PlayerPos;
 
     GameObject Player;
 
     Component GameControl;
-    float enemySpeed = 2.5f;
+    public Animator animator;
+    float moveSpeed = 3f;
     Rigidbody2D rb;
     Vector2 movement;
 
@@ -21,23 +22,21 @@ public class Enemy : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         GameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
-        PlayerPos = Player.transform;
         rb = GetComponent<Rigidbody2D>();
-        //rb.freezeRotation = true;
     }
 
     void Update()
     {
-        Vector3 direction = PlayerPos.position - transform.position;
-        //float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        //rb.rotation = angle;
+        PlayerPos = Player.transform.position;
+        Vector3 direction = PlayerPos - transform.position;
         direction.Normalize();
         movement = direction;
 
     }
     void FixedUpdate()
     {
-        rb.MovePosition((Vector2)transform.position + (movement * enemySpeed * Time.deltaTime));
+        rb.velocity = new Vector2(movement.x * moveSpeed, movement.y * moveSpeed);
+        animator.SetFloat("speed", rb.velocity.magnitude);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
