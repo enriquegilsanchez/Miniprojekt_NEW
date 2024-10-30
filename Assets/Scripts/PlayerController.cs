@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,10 +20,13 @@ public class PlayerController : MonoBehaviour
 
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 50f;
+    private float dashingPower = 30f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 1f;
+    private float dashingCooldown = 2f;
+    private float dashingCooldownIndicator = 0f;
     [SerializeField] private TrailRenderer tr;
+
+    public Slider DashBar;
 
 
     // Start is called before the first frame update
@@ -37,6 +41,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DashBar.value < 2)
+        {
+            DashBar.value += Time.deltaTime;
+        }
+
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
@@ -60,6 +69,7 @@ public class PlayerController : MonoBehaviour
 
         if (isDashing)
         {
+            DashBar.value = 0;
             return;
         }
 
