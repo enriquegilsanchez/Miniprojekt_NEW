@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private float dashingPower = 50f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
+    public GameControl control;
     [SerializeField] private TrailRenderer tr;
 
 
@@ -29,28 +30,30 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDashing)
+        if(!control.GetComponent<GameControl>().MenuIsOpen && !control.GetComponent<GameControl>().gameover)
         {
-            return;
+            if (isDashing)
+            {
+                return;
+            }
+
+            float moveX = Input.GetAxisRaw("Horizontal");
+            float moveY = Input.GetAxisRaw("Vertical");
+
+            moveDirection = new UnityEngine.Vector2(moveX, moveY).normalized;
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (Input.GetMouseButtonDown(0))
+            {
+                weapon.Shoot();
+                Debug.Log(mousePosition);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && canDash)
+            {
+                StartCoroutine(Dash());
+            }
         }
-
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-
-        moveDirection = new UnityEngine.Vector2(moveX, moveY).normalized;
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetMouseButtonDown(0))
-        {
-            weapon.Shoot();
-            Debug.Log(mousePosition);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && canDash)
-        {
-            StartCoroutine(Dash());
-        }
-
-
+        
     }
 
 
