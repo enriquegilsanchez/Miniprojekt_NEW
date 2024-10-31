@@ -8,8 +8,8 @@ using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour
 {
-    public static int Score = 0;
-    public static float Health = 3;
+    public int Score = 0;
+    public float PlayerHealth;
 
     public Text TXTScore;
     public Text Timer_Display;
@@ -17,10 +17,12 @@ public class GameControl : MonoBehaviour
     public float Seconds;
     public float Timer;
     public Slider HealthBar;
+    private GameObject Player;
+    private PlayerController pc;
 
     public GameObject GameOver;
     public GameObject Menu;
-    
+
     public bool MenuIsOpen = false;
     public bool gameover = false;
     /* public AudioSource AudioSource;
@@ -33,26 +35,33 @@ public class GameControl : MonoBehaviour
     void Start()
     {
         Score = 0;
-        Health = 5;
-        HealthBar.maxValue = Health;
-        HealthBar.value = Health;
         GameOver.SetActive(false);
+        Player = GameObject.FindGameObjectWithTag("Player");
+        pc = Player.GetComponent<PlayerController>();
+        PlayerHealth = 5;
+        HealthBar.maxValue = PlayerHealth;
+        HealthBar.value = PlayerHealth;
+        Debug.Log("playerHealth:" + PlayerHealth);
+        Debug.Log("healthbarvalue:" + HealthBar.value);
         Menu.SetActive(false);
         music.SetActive(true);
-        gameover = false; 
-           
+        gameover = false;
+
     }
 
     void Update()
-    { 
-        HealthBar.value = Health;
+    {
+        PlayerHealth = pc.health;
+        // Debug.Log("playerHealth:" + PlayerHealth);
+
+        HealthBar.value = PlayerHealth;
+        // Debug.Log("healthbarvalue:" + HealthBar.value);
         TXTScore.text = Score.ToString();
         Timer += Time.deltaTime;
         Minutes = Mathf.FloorToInt(Timer / 60);
         Seconds = Mathf.FloorToInt(Timer % 60);
         Timer_Display.text = string.Format("{0:00}:{1:00}", Minutes, Seconds);
-      
-         if (Health <= 0)
+        if (PlayerHealth <= 0)
         {
             GameOver.SetActive(true);
             gameover = true;
@@ -62,21 +71,21 @@ public class GameControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(MenuIsOpen)
+            if (MenuIsOpen)
             {
-                
+
                 Menu.SetActive(false);
                 Time.timeScale = 1f;
                 MenuIsOpen = false;
             }
             else
-            {   
-                
+            {
+
                 Menu.SetActive(true);
                 Time.timeScale = 0f;
                 MenuIsOpen = true;
             }
-            
+
         }
 
     }
@@ -85,21 +94,23 @@ public class GameControl : MonoBehaviour
     {
         Time.timeScale = 1;
         Score = 0;
-        Health = 5;
-        HealthBar.maxValue = Health;
-        HealthBar.value = Health;
+        PlayerHealth = 5;
+        HealthBar.maxValue = PlayerHealth;
+        HealthBar.value = PlayerHealth;
         gameoverMusic.SetActive(false);
         GameOver.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ChangeHp(int val)
-    {
-        Health += val;
-    }
+
 
     public void GetHp()
     {
-        Debug.Log("Hp: " + Health);
+        Debug.Log("Hp: " + PlayerHealth);
+    }
+
+    public void ChangeScore(int val)
+    {
+        Score += val;
     }
 }

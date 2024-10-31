@@ -6,13 +6,22 @@ public class Weapon : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
+
     public GameObject gunSound;
-    public float fireForce = 40f;
+    UnityEngine.Vector3 mousePosition;
     public void Shoot()
     {
         Instantiate(gunSound, firePoint.position, firePoint.rotation);
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
-        bullet.GetComponent<Rigidbody2D>().AddForce(firePoint.up * fireForce, ForceMode2D.Impulse);
+        // bullet.GetComponent<Rigidbody2D>().AddForce(firePoint.right * fireForce, ForceMode2D.Impulse);
+    }
+
+    public void Update()
+    {
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        UnityEngine.Vector2 aimDirection = mousePosition - transform.position;
+        float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg;
+        transform.rotation = UnityEngine.Quaternion.Euler(0, 0, aimAngle);
     }
 }

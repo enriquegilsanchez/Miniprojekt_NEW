@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Zombie
+  - Enemy
+  - Weapon
+  - Player_Bullet
+  - enemy_projectile
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX

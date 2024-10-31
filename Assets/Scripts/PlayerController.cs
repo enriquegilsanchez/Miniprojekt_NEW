@@ -3,38 +3,49 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 10f;
+    public float maxHealth = 5;
+    public float health = 5;
     public Rigidbody2D rb;
+    public Animator animator;
     public Weapon weapon;
+    public Transform firePoint;
     UnityEngine.Vector2 moveDirection;
     UnityEngine.Vector2 mousePosition;
+    private SpriteRenderer spriteRenderer;
 
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 50f;
+    private float dashingPower = 30f;
     private float dashingTime = 0.2f;
-    private float dashingCooldown = 1f;
+    private float dashingCooldown = 2f;
     public GameControl control;
     [SerializeField] private TrailRenderer tr;
+
+    public Slider DashBar;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
+        Time.timeScale = 1;
+        health = maxHealth;
+        animator.SetFloat("hp", health);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!control.GetComponent<GameControl>().MenuIsOpen && !control.GetComponent<GameControl>().gameover)
+        if (!control.GetComponent<GameControl>().MenuIsOpen && !control.GetComponent<GameControl>().gameover)
         {
-            if (isDashing)
+            if (DashBar.value < 2)
             {
-                return;
+                DashBar.value += Time.deltaTime;
             }
 
             float moveX = Input.GetAxisRaw("Horizontal");
@@ -42,10 +53,26 @@ public class PlayerController : MonoBehaviour
 
             moveDirection = new UnityEngine.Vector2(moveX, moveY).normalized;
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            if (moveDirection.x <= 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 weapon.Shoot();
                 Debug.Log(mousePosition);
+            }
+
+            if (isDashing)
+            {
+                DashBar.value = 0;
+                return;
             }
 
             if (Input.GetKeyDown(KeyCode.Space) && canDash)
@@ -53,7 +80,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Dash());
             }
         }
-        
+
     }
 
 
@@ -77,9 +104,16 @@ public class PlayerController : MonoBehaviour
             return;
         }
         rb.velocity = new UnityEngine.Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        animator.SetFloat("speed", rb.velocity.magnitude);
+    }
 
-        UnityEngine.Vector2 aimDirection = mousePosition - rb.position;
-        float aimAngle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90f;
-        rb.rotation = aimAngle;
+    public void ChangeHp(int val)
+    {
+        health += val;
+        animator.SetFloat("hp", health);
+        if (health <= 0)
+        {
+
+        }
     }
 }
