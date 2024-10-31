@@ -55,7 +55,6 @@ public class Skeleton_Archer : MonoBehaviour
     {
         if (health <= 0)
         {
-            rb.velocity = new Vector2(0, 0);
             return;
         }
         rb.velocity = new Vector2(movement.x * moveSpeed, movement.y * moveSpeed);
@@ -66,7 +65,6 @@ public class Skeleton_Archer : MonoBehaviour
     {
         if (health <= 0)
         {
-            rb.velocity = new Vector2(0, 0);
             return;
         }
         time += Time.deltaTime;
@@ -85,7 +83,6 @@ public class Skeleton_Archer : MonoBehaviour
     {
         if (health <= 0)
         {
-            rb.velocity = new Vector2(0, 0);
             return;
         }
         if (collision.gameObject.CompareTag("Player"))
@@ -100,9 +97,8 @@ public class Skeleton_Archer : MonoBehaviour
         animator.SetFloat("hp", health);
         if (health <= 0)
         {
-            // Dont need blood for skeletons
-            // GameObject bloodeffect = Instantiate(Blood, transform.position, transform.rotation);
-            // Destroy(bloodeffect.gameObject, 0.8f);
+            rb.velocity = new Vector2(0, 0);
+            Destroy(GetComponent<BoxCollider2D>());
             GameControl.SendMessage("ChangeScore", 1);
             Destroy(gameObject, 1f);
         }

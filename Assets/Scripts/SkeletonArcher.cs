@@ -36,7 +36,6 @@ public class SkeletonArcher : MonoBehaviour
     {
         if (health <= 0)
         {
-            rb.velocity = new Vector2(0, 0);
             return;
         }
         PlayerPos = Player.transform.position;
@@ -56,7 +55,6 @@ public class SkeletonArcher : MonoBehaviour
     {
         if (health <= 0)
         {
-            rb.velocity = new Vector2(0, 0);
             return;
         }
         shotTimer += Time.deltaTime;
@@ -68,6 +66,7 @@ public class SkeletonArcher : MonoBehaviour
         }
         else
         {
+            rb.velocity = new Vector2(0, 0);
             if (shotTimer >= 5)
             {
                 weapon.Shoot();
@@ -82,6 +81,8 @@ public class SkeletonArcher : MonoBehaviour
         animator.SetFloat("hp", health);
         if (health <= 0)
         {
+            rb.velocity = new Vector2(0, 0);
+            Destroy(GetComponent<BoxCollider2D>());
             GameControl.SendMessage("ChangeScore", 1);
             Destroy(gameObject, 1f);
         }
