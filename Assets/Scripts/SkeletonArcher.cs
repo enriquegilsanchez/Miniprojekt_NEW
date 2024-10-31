@@ -34,6 +34,11 @@ public class SkeletonArcher : MonoBehaviour
 
     void Update()
     {
+        if (health <= 0)
+        {
+            rb.velocity = new Vector2(0, 0);
+            return;
+        }
         PlayerPos = Player.transform.position;
         Vector3 direction = PlayerPos - transform.position;
         direction.Normalize();
@@ -49,9 +54,14 @@ public class SkeletonArcher : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (health <= 0)
+        {
+            rb.velocity = new Vector2(0, 0);
+            return;
+        }
         shotTimer += Time.deltaTime;
         Debug.Log("ShotTimer" + shotTimer);
-        if ((PlayerPos - transform.position).magnitude >= 5)
+        if (Vector3.Distance(Player.transform.position, transform.position) > 10)
         {
             rb.velocity = new Vector2(movement.x * moveSpeed, movement.y * moveSpeed);
             animator.SetFloat("speed", rb.velocity.magnitude);
@@ -61,6 +71,7 @@ public class SkeletonArcher : MonoBehaviour
             if (shotTimer >= 5)
             {
                 weapon.Shoot();
+                shotTimer = 0f;
             }
         }
     }
@@ -71,11 +82,8 @@ public class SkeletonArcher : MonoBehaviour
         animator.SetFloat("hp", health);
         if (health <= 0)
         {
-            // Dont need blood for skeletons
-            // GameObject bloodeffect = Instantiate(Blood, transform.position, transform.rotation);
-            // Destroy(bloodeffect.gameObject, 0.8f);
             GameControl.SendMessage("ChangeScore", 1);
-            Destroy(gameObject, 1.5f);
+            Destroy(gameObject, 1f);
         }
     }
 

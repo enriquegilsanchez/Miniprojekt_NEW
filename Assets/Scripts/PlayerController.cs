@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private float dashingPower = 30f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 2f;
-    private float dashingCooldownIndicator = 0f;
     [SerializeField] private TrailRenderer tr;
 
     public Slider DashBar;

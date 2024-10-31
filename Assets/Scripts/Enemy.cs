@@ -34,6 +34,10 @@ public class Skeleton_Archer : MonoBehaviour
 
     void Update()
     {
+        if (health <= 0)
+        {
+            return;
+        }
         PlayerPos = Player.transform.position;
         Vector3 direction = PlayerPos - transform.position;
         direction.Normalize();
@@ -49,12 +53,22 @@ public class Skeleton_Archer : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (health <= 0)
+        {
+            rb.velocity = new Vector2(0, 0);
+            return;
+        }
         rb.velocity = new Vector2(movement.x * moveSpeed, movement.y * moveSpeed);
         animator.SetFloat("speed", rb.velocity.magnitude);
     }
 
     void OnCollisionStay2D(Collision2D collision)
     {
+        if (health <= 0)
+        {
+            rb.velocity = new Vector2(0, 0);
+            return;
+        }
         time += Time.deltaTime;
         if (time >= iFrame)
         {
@@ -69,6 +83,11 @@ public class Skeleton_Archer : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (health <= 0)
+        {
+            rb.velocity = new Vector2(0, 0);
+            return;
+        }
         if (collision.gameObject.CompareTag("Player"))
         {
             GameControl.SendMessage("GetHp");
@@ -85,7 +104,7 @@ public class Skeleton_Archer : MonoBehaviour
             // GameObject bloodeffect = Instantiate(Blood, transform.position, transform.rotation);
             // Destroy(bloodeffect.gameObject, 0.8f);
             GameControl.SendMessage("ChangeScore", 1);
-            Destroy(gameObject, 1.5f);
+            Destroy(gameObject, 1f);
         }
     }
 
