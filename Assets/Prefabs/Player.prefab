@@ -169,7 +169,9 @@ MonoBehaviour:
   animator: {fileID: 497645997942975232}
   weapon: {fileID: 1559983241679724227}
   firePoint: {fileID: 5493295184753958970}
+  control: {fileID: 0}
   tr: {fileID: 3349758028820602564}
+  DashBar: {fileID: 0}
 --- !u!96 &3349758028820602564
 TrailRenderer:
   serializedVersion: 3
@@ -479,3 +481,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 5493295184753958970}
   bulletPrefab: {fileID: 3601019431867710499, guid: 4ef1928052acc7648be784c18609b6e5, type: 3}
+  gunSound: {fileID: 0}

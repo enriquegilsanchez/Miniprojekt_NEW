@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,7 +19,7 @@ public class MainMenu : MonoBehaviour
         Menu.SetActive(false);
         Time.timeScale = 1f;
         controller.GetComponent<GameControl>().MenuIsOpen = false;
-}
+    }
 
 
 }

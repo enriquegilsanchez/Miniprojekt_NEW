@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +20,7 @@ public class PlayerController : MonoBehaviour
     private float dashingPower = 30f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 2f;
-    public GameControl control;
+    public GameObject control;
     [SerializeField] private TrailRenderer tr;
 
     public Slider DashBar;
@@ -36,6 +33,7 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         animator.SetFloat("hp", health);
         spriteRenderer = GetComponent<SpriteRenderer>();
+        control = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame

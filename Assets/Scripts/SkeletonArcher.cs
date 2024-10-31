@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SkeletonArcher : MonoBehaviour
@@ -58,7 +55,6 @@ public class SkeletonArcher : MonoBehaviour
             return;
         }
         shotTimer += Time.deltaTime;
-        Debug.Log("ShotTimer" + shotTimer);
         if (Vector3.Distance(Player.transform.position, transform.position) > 10)
         {
             rb.velocity = new Vector2(movement.x * moveSpeed, movement.y * moveSpeed);

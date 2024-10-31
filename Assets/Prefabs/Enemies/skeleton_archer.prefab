@@ -96,7 +96,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01464951, y: 0}
+  m_Offset: {x: -0.062054753, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -107,7 +107,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7949045, y: 1}
+  m_Size: {x: 0.64149594, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &4904139779519967603
 Animator:
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 4904139779519967603}
-  weapon: {fileID: 515859867913501800}
+  weapon: {fileID: 7118068956665154565}
   health: 2
 --- !u!1 &4136082512403831684
 GameObject:
@@ -207,7 +207,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4488581932690161767}
   - component: {fileID: 8097324212040174028}
-  - component: {fileID: 515859867913501800}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Weapon
@@ -283,20 +282,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &515859867913501800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4136082512403831684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69b1ff92d13efd248817885fb6062e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  firePoint: {fileID: 7844093121531426844}
-  bulletPrefab: {fileID: 4593789402357305718, guid: 0f3ec94ff52081a4b89ee1fe8eef8575, type: 3}
 --- !u!1 &4816926149852848139
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,7 +322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2768357263676998163}
-  - component: {fileID: 5416854025238771332}
+  - component: {fileID: 7118068956665154565}
   m_Layer: 0
   m_Name: RotatePoint
   m_TagString: Untagged
@@ -361,7 +346,7 @@ Transform:
   - {fileID: 4488581932690161767}
   m_Father: {fileID: 4380799272896463577}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.2}
---- !u!114 &5416854025238771332
+--- !u!114 &7118068956665154565
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -370,8 +355,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6080413891472438830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f95fef9d60aa9474cb7f71330d412dce, type: 3}
+  m_Script: {fileID: 11500000, guid: 69b1ff92d13efd248817885fb6062e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 7844093121531426844}
-  bulletPrefab: {fileID: 3601019431867710499, guid: 4ef1928052acc7648be784c18609b6e5, type: 3}
+  bulletPrefab: {fileID: 4593789402357305718, guid: 0f3ec94ff52081a4b89ee1fe8eef8575, type: 3}
