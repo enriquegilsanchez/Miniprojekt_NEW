@@ -28,15 +28,15 @@ public class enemy_arrow : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
 
-        // if (collision.gameObject.CompareTag("Enemy"))
-        // {
-        //     Physics.IgnoreCollision(collision.collider, GetComponent<BoxCollider2D>, true);
-        // }
-
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Physics2D.IgnoreCollision(collision.collider, Ga);
+        }
+        Destroy(gameObject);
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Arrow Collision");
-            Destroy(gameObject);
+
             Debug.Log("Player hit" + collision.gameObject.name);
             collision.gameObject.SendMessage("ChangeHp", -1);
         }

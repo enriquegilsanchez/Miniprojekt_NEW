@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8700533280376469756}
   - component: {fileID: 1941051920214480450}
   - component: {fileID: 9136723025312805971}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: skeleton
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7162608956325205686}
   - component: {fileID: 3845943047325246332}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: left_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5562838673925703032}
   - component: {fileID: 6101393183806352682}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wood_sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7163897437387355729}
   - component: {fileID: 1067396443583135127}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: right_hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4904139779519967603}
   - component: {fileID: 3238181263761984047}
   - component: {fileID: 6963191296272056066}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: skeleton_archer
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4488581932690161767}
   - component: {fileID: 8097324212040174028}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7844093121531426844}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2768357263676998163}
   - component: {fileID: 7118068956665154565}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RotatePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
