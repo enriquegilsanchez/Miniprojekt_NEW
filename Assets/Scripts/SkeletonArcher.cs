@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class Skeleton_Archer : MonoBehaviour
+public class SkeletonArcher : MonoBehaviour
 {
 
     Vector3 PlayerPos;
@@ -16,10 +16,10 @@ public class Skeleton_Archer : MonoBehaviour
     float moveSpeed = 3f;
     Rigidbody2D rb;
     Vector2 movement;
+    public EnemyWeapon weapon;
 
 
-    private float iFrame = 1f;
-    private float time = 0f;
+    private float shotTimer = 0f;
 
     [SerializeField]
     int health;
@@ -49,32 +49,22 @@ public class Skeleton_Archer : MonoBehaviour
     }
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(movement.x * moveSpeed, movement.y * moveSpeed);
-        animator.SetFloat("speed", rb.velocity.magnitude);
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        time += Time.deltaTime;
-        if (time >= iFrame)
+        shotTimer += Time.deltaTime;
+        Debug.Log("ShotTimer" + shotTimer);
+        if ((PlayerPos - transform.position).magnitude >= 5)
         {
-            time = 0f;
-            if (collision.gameObject.CompareTag("Player"))
+            rb.velocity = new Vector2(movement.x * moveSpeed, movement.y * moveSpeed);
+            animator.SetFloat("speed", rb.velocity.magnitude);
+        }
+        else
+        {
+            if (shotTimer >= 5)
             {
-                GameControl.SendMessage("GetHp");
-                Player.SendMessage("ChangeHp", -1);
+                weapon.Shoot();
             }
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            GameControl.SendMessage("GetHp");
-            Player.SendMessage("ChangeHp", -1);
-        }
-    }
     public void ChangeHp(int val)
     {
         health += val;
