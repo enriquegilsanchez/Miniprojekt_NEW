@@ -30,7 +30,7 @@ public class enemy_arrow : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Physics2D.IgnoreCollision(collision.collider, Ga);
+            //Physics2D.IgnoreCollision(collision.collider, Ga);
         }
         Destroy(gameObject);
         if (collision.gameObject.CompareTag("Player"))
