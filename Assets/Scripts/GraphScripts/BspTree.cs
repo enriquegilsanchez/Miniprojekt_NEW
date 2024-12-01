@@ -6,6 +6,7 @@ public class BspTree
     public BspTree leftChild;
     public BspTree rightChild;
     public Rect container;
+    public Rect room;
 
     public BspTree(Rect givenContainer)
     {
@@ -23,11 +24,13 @@ public class BspTree
         }
 
         var newContainers = splitContainer(container);
-        currentNode.leftChild = splitTree(splitTimes - 1, newContainers[0]);
-        Debug.Log("splitTimes after left: " + splitTimes);
+        if (newContainers[0].width > 30 && newContainers[0].height > 30)
+            currentNode.leftChild = splitTree(splitTimes - 1, newContainers[0]);
+        // Debug.Log("splitTimes after left: " + splitTimes);
 
-        currentNode.rightChild = splitTree(splitTimes - 1, newContainers[1]);
-        Debug.Log("splitTimes after right: " + splitTimes);
+        if (newContainers[1].width > 30 && newContainers[1].height > 30)
+            currentNode.rightChild = splitTree(splitTimes - 1, newContainers[1]);
+        // Debug.Log("splitTimes after right: " + splitTimes);
 
         return currentNode;
 
@@ -40,7 +43,7 @@ public class BspTree
 
         var splitVertical = Random.value < 0.5f;
 
-        Debug.Log("splitVertical: " + splitVertical);
+        // Debug.Log("splitVertical: " + splitVertical);
 
         if (splitVertical)
         {
@@ -54,18 +57,36 @@ public class BspTree
             container1 = new Rect(givenContainer.x, givenContainer.y, givenContainer.width, newHeight);
             container2 = new Rect(givenContainer.x, givenContainer.y + container1.height, givenContainer.width, givenContainer.height - container1.height);
         }
-        Debug.Log("-----------------Start Containers-------------------");
-        Debug.Log("c1 x: " + container1.x);
-        Debug.Log("c1 y: " + container1.y);
-        Debug.Log("c1 width: " + container1.width);
-        Debug.Log("c1 height: " + container1.height);
-        Debug.Log("----------------------------------------------------");
-        Debug.Log("c2 x: " + container2.x);
-        Debug.Log("c2 y: " + container2.y);
-        Debug.Log("c2 width: " + container2.width);
-        Debug.Log("c2 height: " + container2.height);
-        Debug.Log("-----------------End Containers---------------------");
+
+        // Debug Info
+        // Debug.Log("-----------------Start Containers-------------------");
+        // Debug.Log("c1 x: " + container1.x);
+        // Debug.Log("c1 y: " + container1.y);
+        // Debug.Log("c1 width: " + container1.width);
+        // Debug.Log("c1 height: " + container1.height);
+        // Debug.Log("----------------------------------------------------");
+        // Debug.Log("c2 x: " + container2.x);
+        // Debug.Log("c2 y: " + container2.y);
+        // Debug.Log("c2 width: " + container2.width);
+        // Debug.Log("c2 height: " + container2.height);
+        // Debug.Log("-----------------End Containers---------------------");
+
+
         return new Rect[] { container1, container2 };
+    }
+
+    public static Rect generateRooms(Rect container, int widthMin, int widthMax, int heightMin, int heightMax)
+    {
+        int width = Random.Range(widthMin, widthMax);
+        int height = Random.Range(heightMin, heightMax);
+        return new Rect(container.x, container.y, width, height);
+    }
+
+    public static bool isLeaf(BspTree tree)
+    {
+        if (tree.leftChild != null || tree.rightChild != null) return false;
+
+        return true;
     }
 
 }

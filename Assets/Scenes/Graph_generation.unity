@@ -373,7 +373,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 25, y: 25}
-  m_SizeDelta: {x: 51, y: 51}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &643719620
 MonoBehaviour:
@@ -462,6 +462,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugDraw: 1
+  bspSize: 200
+  bspPos: c00300001c020000
+  numberOfSplits: 4
+  widthMin: 10
+  widthMax: 30
+  heightMin: 10
+  heightMax: 30
 --- !u!1 &1316654880
 GameObject:
   m_ObjectHideFlags: 0
