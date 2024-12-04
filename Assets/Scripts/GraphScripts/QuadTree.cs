@@ -37,7 +37,7 @@ public class QuadTree
         else
         {
             var splitProbability = Random.Range(0, 100) > 50 ? true : false;
-            Debug.Log("splitProb: " + splitProbability);
+            // Debug.Log("splitProb: " + splitProbability);
             if (splitProbability && initialSplit <= 3)
             {
                 currentNode.q1 = SplitTree(minSize, newContainers[0], initialSplit + 1);
@@ -97,7 +97,7 @@ public class QuadTree
             height = Random.Range(minSize, (int)container.height - 5);
         }
 
-        Debug.Log("QUAD ROOM width: " + width + " height: " + height);
+        // Debug.Log("QUAD ROOM width: " + width + " height: " + height);
 
         int x = Random.Range((int)container.x + 5, (int)container.xMax - width - 5);
         int y = Random.Range((int)container.y + 5, (int)container.yMax - height - 5);
@@ -126,7 +126,8 @@ public class QuadTree
 
     public static bool IsLeaf(QuadTree tree)
     {
-        if (tree.q1 != null || tree.q2 != null || tree.q3 != null || tree.q4 != null) return false;
+        if (tree.q1 != null || tree.q2 != null || tree.q3 != null || tree.q4 != null)
+            return false;
 
         return true;
     }

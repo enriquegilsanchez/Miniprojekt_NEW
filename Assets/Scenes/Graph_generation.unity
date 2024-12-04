@@ -481,7 +481,9 @@ MonoBehaviour:
   DebugDraw: 1
   quadSize: 400
   quadPos: 4c0400002c010000
-  minSize: 10
+  minSize: 15
+  roomPrefab: {fileID: 3701375726620017269, guid: 828930e2c4419a7469766646d9148dae, type: 3}
+  roomGenerator: {fileID: 0}
 --- !u!1 &1316654880
 GameObject:
   m_ObjectHideFlags: 0

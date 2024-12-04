@@ -13,14 +13,17 @@ public class QuadTreeGenerator : MonoBehaviour
     [SerializeField] int quadSize;
     [SerializeField] int[] quadPos = { 0, 0 };
     [SerializeField] int minSize;
+    public GameObject roomPrefab;
+    public List<DungeonTile[,]> allTiles = new List<DungeonTile[,]>();
 
     // Start is called before the first frame update
     void Start()
     {
+        allTiles.Clear();
         Rect rect = new Rect(quadPos[0], quadPos[1], quadSize, quadSize);
         tree = QuadTree.SplitTree(minSize, rect);
-        PrintLeafSizes(tree);
         QuadTree.PlaceRooms(tree, minSize);
+        PlaceRoomTilemaps(tree);
     }
     void OnDrawGizmos()
     {
@@ -28,7 +31,7 @@ public class QuadTreeGenerator : MonoBehaviour
         {
             DrawQuadTree(tree);
             DrawSizeIndicator();
-            DrawRooms(tree);
+            // DrawRooms(tree);
         }
     }
 
@@ -64,8 +67,7 @@ public class QuadTreeGenerator : MonoBehaviour
 
     void PrintLeafSizes(QuadTree tree)
     {
-        if (tree == null)
-            return;
+        if (tree == null) return;
 
         PrintLeafSizes(tree.q1);
         PrintLeafSizes(tree.q2);
@@ -94,5 +96,21 @@ public class QuadTreeGenerator : MonoBehaviour
         Handles.Label(new UnityEngine.Vector2(quadPos[0] - 150, quadPos[1] + quadSize / 2), "height: " + quadSize);
         Handles.EndGUI();
 
+    }
+
+    void PlaceRoomTilemaps(QuadTree tree)
+    {
+        if (tree == null)
+            return;
+
+        PlaceRoomTilemaps(tree.q1);
+        PlaceRoomTilemaps(tree.q2);
+        PlaceRoomTilemaps(tree.q3);
+        PlaceRoomTilemaps(tree.q4);
+
+        if (QuadTree.IsLeaf(tree))
+        {
+            allTiles.Add(RoomGenerator.RoomToGrid(tree.room));
+        }
     }
 }
