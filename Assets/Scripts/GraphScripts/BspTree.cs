@@ -47,13 +47,13 @@ public class BspTree
 
         if (splitVertical)
         {
-            var newWidth = (int)(givenContainer.width * Random.Range(0.3f, 0.6f));
+            var newWidth = (int)(givenContainer.width * Random.Range(0.4f, 0.6f));
             container1 = new Rect(givenContainer.x, givenContainer.y, newWidth, givenContainer.height);
             container2 = new Rect(givenContainer.x + container1.width, givenContainer.y, givenContainer.width - container1.width, givenContainer.height);
         }
         else
         {
-            var newHeight = (int)(givenContainer.height * Random.Range(0.3f, 0.6f));
+            var newHeight = (int)(givenContainer.height * Random.Range(0.4f, 0.6f));
             container1 = new Rect(givenContainer.x, givenContainer.y, givenContainer.width, newHeight);
             container2 = new Rect(givenContainer.x, givenContainer.y + container1.height, givenContainer.width, givenContainer.height - container1.height);
         }
@@ -75,14 +75,39 @@ public class BspTree
         return new Rect[] { container1, container2 };
     }
 
-    public static Rect generateRooms(Rect container, int widthMin, int widthMax, int heightMin, int heightMax)
+    public static Rect generateRoom(Rect container)
     {
-        int width = Random.Range(widthMin, widthMax);
-        int height = Random.Range(heightMin, heightMax);
-        return new Rect(container.x, container.y, width, height);
+        int width = Random.Range(10, (int)container.width);
+        int height = Random.Range(10, (int)container.height);
+        // Debug.Log("width: " + width);
+        // Debug.Log("height: " + height);
+        // int x = (int)(container.center.x - (width / 2));
+        // int y = (int)(container.center.y - (height / 2));
+        // Debug.Log("x: " + x + " | container x = " + container.xMax);
+        // Debug.Log("y: " + y + " | container y = " + container.yMax);
+
+        int x = Random.Range((int)container.x, (int)container.xMax - width);
+        int y = Random.Range((int)container.y, (int)container.yMax - height);
+        return new Rect(x, y, width, height);
     }
 
-    public static bool isLeaf(BspTree tree)
+    public static void placeRooms(BspTree tree)
+    {
+        if (tree == null)
+        {
+            return;
+        }
+
+        placeRooms(tree.leftChild);
+        placeRooms(tree.rightChild);
+
+        if (IsLeaf(tree))
+        {
+            tree.room = generateRoom(tree.container);
+        }
+    }
+
+    public static bool IsLeaf(BspTree tree)
     {
         if (tree.leftChild != null || tree.rightChild != null) return false;
 

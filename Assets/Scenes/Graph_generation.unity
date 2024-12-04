@@ -372,8 +372,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 25}
-  m_SizeDelta: {x: 500, y: 500}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &643719620
 MonoBehaviour:
@@ -423,6 +423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 760637782}
   - component: {fileID: 760637783}
+  - component: {fileID: 760637784}
   m_Layer: 5
   m_Name: graphGenerator
   m_TagString: Untagged
@@ -462,13 +463,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugDraw: 1
-  bspSize: 200
-  bspPos: c00300001c020000
+  bspSize: 400
+  bspPos: 2c0100002c010000
   numberOfSplits: 4
-  widthMin: 10
-  widthMax: 30
-  heightMin: 10
-  heightMax: 30
+--- !u!114 &760637784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760637781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 711746d4dc95cde42a8673d990cecb64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugDraw: 1
+  quadSize: 400
+  quadPos: 4c0400002c010000
+  minSize: 10
 --- !u!1 &1316654880
 GameObject:
   m_ObjectHideFlags: 0
