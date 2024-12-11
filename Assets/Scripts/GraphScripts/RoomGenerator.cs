@@ -15,24 +15,6 @@ public class RoomGenerator : MonoBehaviour
     private Tilemap wallTilemap;
 
     [SerializeField]
-    private TileBase floorTile;
-
-    [SerializeField]
-    private TileBase wallTopUpperTile;
-
-    [SerializeField]
-    private TileBase wallTopLowerTile;
-
-    [SerializeField]
-    private TileBase wallLeftTile;
-
-    [SerializeField]
-    private TileBase wallRightTile;
-
-    [SerializeField]
-    private TileBase wallBottonTile;
-
-    [SerializeField]
     private TileBase c1Tile;
 
     [SerializeField]
@@ -43,6 +25,63 @@ public class RoomGenerator : MonoBehaviour
 
     [SerializeField]
     private TileBase c4Tile;
+
+    [SerializeField]
+    private TileBase floorC1Tile;
+
+    [SerializeField]
+    private TileBase floorC2Tile;
+
+    [SerializeField]
+    private TileBase floorC3Tile;
+
+    [SerializeField]
+    private TileBase floorC4Tile;
+
+    [SerializeField]
+    private TileBase floorLeftTile;
+
+    [SerializeField]
+    private TileBase floorRightTile;
+
+    [SerializeField]
+    private TileBase floorTopTile;
+
+    [SerializeField]
+    private TileBase floorBottomTile;
+
+    [SerializeField]
+    private TileBase floorMiddleTile;
+
+    [SerializeField]
+    private TileBase wallC1Tile;
+
+    [SerializeField]
+    private TileBase wallC2Tile;
+
+    [SerializeField]
+    private TileBase wallC3Tile;
+
+    [SerializeField]
+    private TileBase wallC4Tile;
+
+    [SerializeField]
+    private TileBase wallMiddleUpperTile;
+
+    [SerializeField]
+    private TileBase wallMiddleLowerTile;
+
+    [SerializeField]
+    private TileBase wallTopTile;
+
+    [SerializeField]
+    private TileBase wallLeftTile;
+
+    [SerializeField]
+    private TileBase wallRightTile;
+
+    [SerializeField]
+    private TileBase wallBottonTile;
 
     /// <summary>
     /// Generates a Grid of DungeonTiles for the given room rect and paints all room tiles
@@ -117,6 +156,7 @@ public class RoomGenerator : MonoBehaviour
     /// <returns></returns>
     private string DetermineTileType(int x, int y, int xMin, int xMax, int yMin, int yMax)
     {
+        // ------------------ Room Corner Tiles ----------------------------
         if (x == xMin && y == yMax - 1)
         {
             PaintSingleTile(wallTilemap, c4Tile, new Vector2Int(x, y));
@@ -137,16 +177,44 @@ public class RoomGenerator : MonoBehaviour
             PaintSingleTile(wallTilemap, c1Tile, new Vector2Int(x, y));
             return "c1";
         }
-        if (x > xMin && x < xMax - 1 && y == yMax - 1)
+
+        // ---------------------- Upper Wall Tiles --------------------------
+
+        // Corners
+        if (x == xMin + 1 && y == yMax - 2)
         {
-            PaintSingleTile(wallTilemap, wallTopUpperTile, new Vector2Int(x, y));
-            return "wall_top_upper";
+            PaintSingleTile(wallTilemap, wallC4Tile, new Vector2Int(x, y));
+            return "wall_c4";
         }
-        if (x > xMin && x < xMax - 1 && y == yMax - 2)
+        if (x == xMax - 2 && y == yMax - 2)
         {
-            PaintSingleTile(wallTilemap, wallTopLowerTile, new Vector2Int(x, y));
-            return "wall_top_lower";
+            PaintSingleTile(wallTilemap, wallC3Tile, new Vector2Int(x, y));
+            return "wall_c3";
         }
+        if (x == xMin + 2 && y == yMax - 3)
+        {
+            PaintSingleTile(wallTilemap, wallC2Tile, new Vector2Int(x, y));
+            return "wall_c2";
+        }
+        if (x == xMin + 1 && y == yMax - 3)
+        {
+            PaintSingleTile(wallTilemap, wallC1Tile, new Vector2Int(x, y));
+            return "wall_c1";
+        }
+
+        // Upper and Lower Infill
+        if (x > xMin + 1 && x < xMax - 2 && y == yMax - 2)
+        {
+            PaintSingleTile(wallTilemap, wallMiddleUpperTile, new Vector2Int(x, y));
+            return "wall_middle_upper";
+        }
+        if (x > xMin + 1 && x < xMax - 2 && y == yMax - 3)
+        {
+            PaintSingleTile(wallTilemap, wallMiddleLowerTile, new Vector2Int(x, y));
+            return "wall_middle_lower";
+        }
+
+        // ----------------------- Surrounding wall tiles --------------------------
         if (x == xMin && y > yMin && y < yMax - 1)
         {
             PaintSingleTile(wallTilemap, wallLeftTile, new Vector2Int(x, y));
@@ -157,12 +225,65 @@ public class RoomGenerator : MonoBehaviour
             PaintSingleTile(wallTilemap, wallRightTile, new Vector2Int(x, y));
             return "wall_right";
         }
+        if (x > xMin && x < xMax - 1 && y == yMax - 1)
+        {
+            PaintSingleTile(wallTilemap, wallTopTile, new Vector2Int(x, y));
+            return "wall_top";
+        }
         if (x > xMin && x < xMax - 1 && y == yMin)
         {
             PaintSingleTile(wallTilemap, wallBottonTile, new Vector2Int(x, y));
             return "wall_bottom";
         }
-        PaintSingleTile(floorTilemap, floorTile, new Vector2Int(x, y));
-        return "floor";
+
+        // -------------------- Floor Tiles ---------------------------
+
+        // Corners
+        if (x == xMin + 1 && y == yMax - 4)
+        {
+            PaintSingleTile(wallTilemap, floorC4Tile, new Vector2Int(x, y));
+            return "floor_c4";
+        }
+        if (x == xMax - 2 && y == yMax - 4)
+        {
+            PaintSingleTile(wallTilemap, floorC3Tile, new Vector2Int(x, y));
+            return "floor_c3";
+        }
+        if (x == xMax - 2 && y == yMin + 1)
+        {
+            PaintSingleTile(wallTilemap, floorC2Tile, new Vector2Int(x, y));
+            return "floor_c2";
+        }
+        if (x == xMin + 1 && y == yMin + 1)
+        {
+            PaintSingleTile(wallTilemap, floorC1Tile, new Vector2Int(x, y));
+            return "floor_c1";
+        }
+
+        // Surrounding Floor Tiles
+        if (x > xMin + 1 && x < xMax - 2 && y == yMax - 4)
+        {
+            PaintSingleTile(wallTilemap, floorTopTile, new Vector2Int(x, y));
+            return "floor_top";
+        }
+        if (x > xMin + 1 && x < xMax - 2 && y == yMin + 1)
+        {
+            PaintSingleTile(wallTilemap, floorBottomTile, new Vector2Int(x, y));
+            return "floor_bottom";
+        }
+        if (x == xMin + 1 && y > yMin + 1 && y < yMax - 4)
+        {
+            PaintSingleTile(wallTilemap, floorLeftTile, new Vector2Int(x, y));
+            return "floor_left";
+        }
+        if (x == xMax - 2 && y > yMin + 1 && y < yMax - 4)
+        {
+            PaintSingleTile(wallTilemap, floorRightTile, new Vector2Int(x, y));
+            return "floor_right";
+        }
+
+        // Middle Infill
+        PaintSingleTile(floorTilemap, floorMiddleTile, new Vector2Int(x, y));
+        return "floor_middle";
     }
 }
