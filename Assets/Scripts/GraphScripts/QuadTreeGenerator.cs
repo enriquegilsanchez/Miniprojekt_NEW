@@ -23,7 +23,9 @@ public class QuadTreeGenerator : MonoBehaviour
         Rect rect = new Rect(quadPos[0], quadPos[1], quadSize, quadSize);
         tree = QuadTree.SplitTree(minSize, rect);
         QuadTree.PlaceRooms(tree, minSize);
-        PlaceRoomTilemaps(tree);
+        // PlaceRoomTilemaps(tree);
+        Rect testRoom = new Rect(0, 0, 20, 20);
+        allTiles.Add(RoomGenerator.RoomToGrid(testRoom));
     }
     void OnDrawGizmos()
     {
@@ -111,6 +113,7 @@ public class QuadTreeGenerator : MonoBehaviour
         if (QuadTree.IsLeaf(tree))
         {
             allTiles.Add(RoomGenerator.RoomToGrid(tree.room));
+
         }
     }
 }
