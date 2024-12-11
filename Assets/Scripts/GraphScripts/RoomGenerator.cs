@@ -110,7 +110,7 @@ public class RoomGenerator : MonoBehaviour
                 type = DetermineTileType(j, i, xMin, xMax, yMin, yMax);
                 tiles[arrx, arry] = new DungeonTile(position, type);
                 // Debug.Log("x = " + j + " y = " + i + " arr vars = { " + arrx + " " + arry + " }");
-                // Debug.Log(tiles[arrx, arry].ToString());
+                Debug.Log(tiles[arrx, arry].ToString());
                 arrx++;
             }
             arry++;
@@ -191,7 +191,7 @@ public class RoomGenerator : MonoBehaviour
             PaintSingleTile(wallTilemap, wallC3Tile, new Vector2Int(x, y));
             return "wall_c3";
         }
-        if (x == xMin + 2 && y == yMax - 3)
+        if (x == xMax - 2 && y == yMax - 3)
         {
             PaintSingleTile(wallTilemap, wallC2Tile, new Vector2Int(x, y));
             return "wall_c2";
@@ -241,44 +241,44 @@ public class RoomGenerator : MonoBehaviour
         // Corners
         if (x == xMin + 1 && y == yMax - 4)
         {
-            PaintSingleTile(wallTilemap, floorC4Tile, new Vector2Int(x, y));
+            PaintSingleTile(floorTilemap, floorC4Tile, new Vector2Int(x, y));
             return "floor_c4";
         }
         if (x == xMax - 2 && y == yMax - 4)
         {
-            PaintSingleTile(wallTilemap, floorC3Tile, new Vector2Int(x, y));
+            PaintSingleTile(floorTilemap, floorC3Tile, new Vector2Int(x, y));
             return "floor_c3";
         }
         if (x == xMax - 2 && y == yMin + 1)
         {
-            PaintSingleTile(wallTilemap, floorC2Tile, new Vector2Int(x, y));
+            PaintSingleTile(floorTilemap, floorC2Tile, new Vector2Int(x, y));
             return "floor_c2";
         }
         if (x == xMin + 1 && y == yMin + 1)
         {
-            PaintSingleTile(wallTilemap, floorC1Tile, new Vector2Int(x, y));
+            PaintSingleTile(floorTilemap, floorC1Tile, new Vector2Int(x, y));
             return "floor_c1";
         }
 
         // Surrounding Floor Tiles
         if (x > xMin + 1 && x < xMax - 2 && y == yMax - 4)
         {
-            PaintSingleTile(wallTilemap, floorTopTile, new Vector2Int(x, y));
+            PaintSingleTile(floorTilemap, floorTopTile, new Vector2Int(x, y));
             return "floor_top";
         }
         if (x > xMin + 1 && x < xMax - 2 && y == yMin + 1)
         {
-            PaintSingleTile(wallTilemap, floorBottomTile, new Vector2Int(x, y));
+            PaintSingleTile(floorTilemap, floorBottomTile, new Vector2Int(x, y));
             return "floor_bottom";
         }
         if (x == xMin + 1 && y > yMin + 1 && y < yMax - 4)
         {
-            PaintSingleTile(wallTilemap, floorLeftTile, new Vector2Int(x, y));
+            PaintSingleTile(floorTilemap, floorLeftTile, new Vector2Int(x, y));
             return "floor_left";
         }
         if (x == xMax - 2 && y > yMin + 1 && y < yMax - 4)
         {
-            PaintSingleTile(wallTilemap, floorRightTile, new Vector2Int(x, y));
+            PaintSingleTile(floorTilemap, floorRightTile, new Vector2Int(x, y));
             return "floor_right";
         }
 
