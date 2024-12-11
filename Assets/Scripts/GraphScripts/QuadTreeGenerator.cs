@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class QuadTreeGenerator : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class QuadTreeGenerator : MonoBehaviour
     [SerializeField] int quadSize;
     [SerializeField] int[] quadPos = { 0, 0 };
     [SerializeField] int minSize;
-    public GameObject roomPrefab;
+    [SerializeField] RoomGenerator roomGenerator;
+    public Tilemap floorTilemap;
     public List<DungeonTile[,]> allTiles = new List<DungeonTile[,]>();
 
     // Start is called before the first frame update
@@ -23,43 +25,48 @@ public class QuadTreeGenerator : MonoBehaviour
         Rect rect = new Rect(quadPos[0], quadPos[1], quadSize, quadSize);
         tree = QuadTree.SplitTree(minSize, rect);
         QuadTree.PlaceRooms(tree, minSize);
+        // Adds all rooms
         // PlaceRoomTilemaps(tree);
-        Rect testRoom = new Rect(0, 0, 20, 20);
-        allTiles.Add(RoomGenerator.RoomToGrid(testRoom));
+
+        // For testing single room classification
+        Rect testRoom = new Rect(0, 0, 5, 5);
+        allTiles.Add(roomGenerator.RoomToDungeonTiles(testRoom));
+        Debug.Log("first tile in test room: " + allTiles[0][0, 0].ToString());
+        var testPos = floorTilemap.WorldToCell(new Vector3Int(0, 0, 0));
     }
     void OnDrawGizmos()
     {
         if (DebugDraw && tree != null)
         {
-            DrawQuadTree(tree);
+            DrawQuadTreeContainers(tree);
             DrawSizeIndicator();
             // DrawRooms(tree);
         }
     }
 
-    void DrawQuadTree(QuadTree tree)
+    void DrawQuadTreeContainers(QuadTree tree)
     {
         Gizmos.color = Color.grey;
 
         Gizmos.DrawWireCube(tree.container.center, tree.container.size);
 
-        if (tree.q1 != null) DrawQuadTree(tree.q1);
-        if (tree.q2 != null) DrawQuadTree(tree.q2);
-        if (tree.q3 != null) DrawQuadTree(tree.q3);
-        if (tree.q4 != null) DrawQuadTree(tree.q4);
+        if (tree.q1 != null) DrawQuadTreeContainers(tree.q1);
+        if (tree.q2 != null) DrawQuadTreeContainers(tree.q2);
+        if (tree.q3 != null) DrawQuadTreeContainers(tree.q3);
+        if (tree.q4 != null) DrawQuadTreeContainers(tree.q4);
     }
 
-    void DrawRooms(QuadTree tree)
+    void DrawRoomContainers(QuadTree tree)
     {
         if (tree == null)
             return;
 
         Gizmos.color = Color.white;
 
-        DrawRooms(tree.q1);
-        DrawRooms(tree.q2);
-        DrawRooms(tree.q3);
-        DrawRooms(tree.q4);
+        DrawRoomContainers(tree.q1);
+        DrawRoomContainers(tree.q2);
+        DrawRoomContainers(tree.q3);
+        DrawRoomContainers(tree.q4);
 
         if (QuadTree.IsLeaf(tree))
         {
@@ -100,19 +107,19 @@ public class QuadTreeGenerator : MonoBehaviour
 
     }
 
-    void PlaceRoomTilemaps(QuadTree tree)
+    void GenerateRoomGrids(QuadTree tree)
     {
         if (tree == null)
             return;
 
-        PlaceRoomTilemaps(tree.q1);
-        PlaceRoomTilemaps(tree.q2);
-        PlaceRoomTilemaps(tree.q3);
-        PlaceRoomTilemaps(tree.q4);
+        GenerateRoomGrids(tree.q1);
+        GenerateRoomGrids(tree.q2);
+        GenerateRoomGrids(tree.q3);
+        GenerateRoomGrids(tree.q4);
 
         if (QuadTree.IsLeaf(tree))
         {
-            allTiles.Add(RoomGenerator.RoomToGrid(tree.room));
+            allTiles.Add(roomGenerator.RoomToDungeonTiles(tree.room));
 
         }
     }

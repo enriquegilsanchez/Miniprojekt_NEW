@@ -482,8 +482,7 @@ MonoBehaviour:
   quadSize: 400
   quadPos: 4c0400002c010000
   minSize: 15
-  roomPrefab: {fileID: 3701375726620017269, guid: 828930e2c4419a7469766646d9148dae, type: 3}
-  roomGenerator: {fileID: 0}
+  tileMap: {fileID: 1621888868}
 --- !u!1 &1316654880
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,7 +643,7 @@ GameObject:
   - component: {fileID: 1621888868}
   - component: {fileID: 1621888867}
   m_Layer: 0
-  m_Name: reference
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -724,15 +723,39 @@ Tilemap:
   m_Enabled: 1
   m_Tiles: {}
   m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: 0
+      e01: 0
+      e02: 1.3224334e-38
+      e03: 1.3224334e-38
+      e10: 0
+      e11: 0
+      e12: 8.56e-43
+      e13: 8.56e-43
+      e20: 5.0845207e+22
+      e21: 0.00031648483
+      e22: -3.6078165e-19
+      e23: -1.03988e-40
+      e30: 4.5905e-41
+      e31: 8.56e-43
+      e32: 8.56e-43
+      e33: 8.59e-43
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 4.2557e-41, g: 4.2557e-41, b: 4.2557e-41, a: 4.2557e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
+  m_Size: {x: 4, y: 1, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
