@@ -483,6 +483,7 @@ MonoBehaviour:
   quadSize: 400
   quadPos: 4c0400002c010000
   minSize: 15
+  maxSize: 50
   roomGenerator: {fileID: 760637785}
   floorTilemap: {fileID: 1621888868}
 --- !u!114 &760637785

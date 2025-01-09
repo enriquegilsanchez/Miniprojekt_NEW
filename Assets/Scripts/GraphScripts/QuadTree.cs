@@ -16,7 +16,12 @@ public class QuadTree
         container = givenContainer;
     }
 
-    internal static QuadTree SplitTree(int minSize, Rect container, int initialSplit = 1)
+    internal static QuadTree SplitTree(
+        int minSize,
+        int maxSize,
+        Rect container,
+        int initialSplit = 1
+    )
     {
         var currentNode = new QuadTree(container);
         var newContainers = SplitContainer(container);
@@ -28,10 +33,10 @@ public class QuadTree
 
         if (initialSplit == 1)
         {
-            currentNode.q1 = SplitTree(minSize, newContainers[0], initialSplit + 1);
-            currentNode.q2 = SplitTree(minSize, newContainers[1], initialSplit + 1);
-            currentNode.q3 = SplitTree(minSize, newContainers[2], initialSplit + 1);
-            currentNode.q4 = SplitTree(minSize, newContainers[3], initialSplit + 1);
+            currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], initialSplit + 1);
+            currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], initialSplit + 1);
+            currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], initialSplit + 1);
+            currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], initialSplit + 1);
             return currentNode;
         }
         else
@@ -40,12 +45,11 @@ public class QuadTree
             // Debug.Log("splitProb: " + splitProbability);
             if (splitProbability && initialSplit <= 3)
             {
-                currentNode.q1 = SplitTree(minSize, newContainers[0], initialSplit + 1);
-                currentNode.q2 = SplitTree(minSize, newContainers[1], initialSplit + 1);
-                currentNode.q3 = SplitTree(minSize, newContainers[2], initialSplit + 1);
-                currentNode.q4 = SplitTree(minSize, newContainers[3], initialSplit + 1);
+                currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], initialSplit + 1);
+                currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], initialSplit + 1);
+                currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], initialSplit + 1);
+                currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], initialSplit + 1);
             }
-
 
             return currentNode;
         }
@@ -53,17 +57,22 @@ public class QuadTree
 
     public static Rect[] SplitContainer(Rect givenContainer)
     {
-
-        Rect c1, c2, c3, c4;
-
-
+        Rect c1,
+            c2,
+            c3,
+            c4;
         var newWidth = (int)(givenContainer.width * 0.5f);
         var newHeight = (int)(givenContainer.height * 0.5f);
 
         c1 = new Rect(givenContainer.x, givenContainer.y, newWidth, newHeight);
         c2 = new Rect(givenContainer.x + newWidth, givenContainer.y, newWidth, newHeight);
-        c3 = new Rect(givenContainer.x + newWidth, givenContainer.y + newHeight, newWidth, newHeight);
-        c4 = new Rect(givenContainer.x, givenContainer.y + newHeight, newWidth, newHeight); ;
+        c3 = new Rect(
+            givenContainer.x + newWidth,
+            givenContainer.y + newHeight,
+            newWidth,
+            newHeight
+        );
+        c4 = new Rect(givenContainer.x, givenContainer.y + newHeight, newWidth, newHeight);
 
         // Debug Info
         // Debug.Log("-----------------Start Containers-------------------" +
@@ -81,15 +90,17 @@ public class QuadTree
     }
 
     // Generates a single room
-    public static Rect GenerateRoom(Rect container, int minSize)
+    public static Rect GenerateRoom(Rect container, int minSize, int maxSize)
     {
         int width = 0;
         int height = 0;
-        // Allow for bigger rooms in larger nodes
-        if (minSize < (int)container.width / 4)
+        // Limit the maximum room size for playability
+        if ((int)container.width > maxSize)
         {
-            width = Random.Range((int)container.width / 4, (int)container.width - 5);
-            height = Random.Range((int)container.height / 4, (int)container.height - 5);
+            // width = Random.Range((int)container.width / 4, (int)container.width - 5);
+            // height = Random.Range((int)container.height / 4, (int)container.height - 5);
+            width = Random.Range(minSize, maxSize);
+            height = Random.Range(minSize, maxSize);
         }
         else
         {
@@ -106,21 +117,21 @@ public class QuadTree
     }
 
     /// Generates and places rooms in all leaf nodes of the QuadTree
-    public static void PlaceRooms(QuadTree tree, int minSize)
+    public static void PlaceRooms(QuadTree tree, int minSize, int maxSize)
     {
         if (tree == null)
         {
             return;
         }
 
-        PlaceRooms(tree.q1, minSize);
-        PlaceRooms(tree.q2, minSize);
-        PlaceRooms(tree.q3, minSize);
-        PlaceRooms(tree.q4, minSize);
+        PlaceRooms(tree.q1, minSize, maxSize);
+        PlaceRooms(tree.q2, minSize, maxSize);
+        PlaceRooms(tree.q3, minSize, maxSize);
+        PlaceRooms(tree.q4, minSize, maxSize);
 
         if (IsLeaf(tree))
         {
-            tree.room = GenerateRoom(tree.container, minSize);
+            tree.room = GenerateRoom(tree.container, minSize, maxSize);
         }
     }
 

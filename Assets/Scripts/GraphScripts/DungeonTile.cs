@@ -14,7 +14,6 @@ public class DungeonTile
         type = givenType;
     }
 
-
     public override string ToString()
     {
         return "Tiletype " + type + " position: { " + position[0] + ", " + position[1] + " }";

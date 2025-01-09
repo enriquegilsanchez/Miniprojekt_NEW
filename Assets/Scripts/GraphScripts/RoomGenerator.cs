@@ -133,7 +133,7 @@ public class RoomGenerator : MonoBehaviour
     // }
 
     /// <summary>
-    /// Paints a single tile at the given position
+    /// Paints a single tile at the given position on the specified tilemap
     /// </summary>
     /// <param name="tilemap"></param>
     /// <param name="tile"></param>

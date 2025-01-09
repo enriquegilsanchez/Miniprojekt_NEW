@@ -21,6 +21,9 @@ public class QuadTreeGenerator : MonoBehaviour
     int minSize;
 
     [SerializeField]
+    int maxSize;
+
+    [SerializeField]
     RoomGenerator roomGenerator;
     public Tilemap floorTilemap;
     public List<DungeonTile[,]> allTiles = new List<DungeonTile[,]>();
@@ -30,8 +33,8 @@ public class QuadTreeGenerator : MonoBehaviour
     {
         allTiles.Clear();
         Rect rect = new Rect(quadPos[0], quadPos[1], quadSize, quadSize);
-        tree = QuadTree.SplitTree(minSize, rect);
-        QuadTree.PlaceRooms(tree, minSize);
+        tree = QuadTree.SplitTree(minSize, maxSize, rect);
+        QuadTree.PlaceRooms(tree, minSize, maxSize);
         // Adds all rooms
         GenerateRoomGrids(tree);
 
