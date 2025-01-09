@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Skeleton_Archer : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 
     Vector3 PlayerPos;
@@ -13,17 +13,20 @@ public class Skeleton_Archer : MonoBehaviour
     float moveSpeed = 3f;
     Rigidbody2D rb;
     Vector2 movement;
-
+    
 
     private float iFrame = 1f;
     private float time = 0f;
 
     [SerializeField]
     int health;
+
+   
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.FindGameObjectWithTag("Player");
+       
         GameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
         animator.SetFloat("hp", health);
@@ -47,6 +50,8 @@ public class Skeleton_Archer : MonoBehaviour
             spriteRenderer.flipX = false;
         }
         movement = direction;
+
+        
     }
     void FixedUpdate()
     {
@@ -96,10 +101,11 @@ public class Skeleton_Archer : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0);
             Destroy(GetComponent<BoxCollider2D>());
-            GameControl.SendMessage("ChangeScore", 1);
+            GameControl.SendMessage("ChangeScore", -1);
             Destroy(gameObject, 1f);
         }
     }
 
+   
 
 }
