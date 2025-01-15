@@ -32,6 +32,7 @@ public class QuadTreeGenerator : MonoBehaviour
 
     public List<Room> roomList;
     public List<DungeonTile[,]> allTiles = new List<DungeonTile[,]>();
+    private bool drawnRoomNumbers = false;
 
     // Start is called before the first frame update
     void Start()
@@ -42,12 +43,12 @@ public class QuadTreeGenerator : MonoBehaviour
         QuadTree.PlaceRooms(tree, minSize, maxSize);
         // Adds all rooms
         GenerateRoomGrids(tree);
-        roomList = GetRoomList(tree);
-        for (int i = 0; i < roomList.Count; i++)
-        {
-            roomList[i].roomNumber = i;
-            Debug.Log(roomList[i].ToString());
-        }
+        CorrectFirstQuadrants(tree);
+        roomConnector.GenerateRoomList(tree, null, "");
+        roomConnector.ConnectLayerFour();
+        roomList = roomConnector.rooms;
+        AssignRoomNumbers(roomList);
+        Debug.Log("quadrant q1: " + tree.q1.quadrant);
     }
 
     void OnDrawGizmos()
@@ -57,6 +58,11 @@ public class QuadTreeGenerator : MonoBehaviour
             DrawQuadTreeContainers(tree);
             DrawSizeIndicator();
             // DrawRooms(tree);
+        }
+        if (!drawnRoomNumbers && roomList != null)
+        {
+            DrawRoomNumbers(roomList);
+            DrawRoomLayerFourConnectors(roomList);
         }
     }
 
@@ -162,9 +168,50 @@ public class QuadTreeGenerator : MonoBehaviour
         }
     }
 
-    List<Room> GetRoomList(QuadTree tree)
+    void CorrectFirstQuadrants(QuadTree tree)
     {
-        roomConnector.GenerateRoomList(tree, null, "");
-        return roomConnector.rooms;
+        tree.q1.quadrant = 1;
+        tree.q2.quadrant = 2;
+        tree.q3.quadrant = 3;
+        tree.q4.quadrant = 4;
+    }
+
+    void AssignRoomNumbers(List<Room> rooms)
+    {
+        int roomNumber = 1;
+        foreach (var room in rooms)
+        {
+            room.roomNumber = roomNumber;
+            Debug.Log(room.ToString());
+            roomNumber++;
+        }
+    }
+
+    void DrawRoomNumbers(List<Room> rooms)
+    {
+        Handles.BeginGUI();
+        GUI.color = Color.white;
+        foreach (var room in rooms)
+        {
+            Handles.Label(
+                new UnityEngine.Vector2(room.rect.center.x - 3, room.rect.center.y + 3),
+                room.roomNumber.ToString()
+            );
+        }
+        Handles.EndGUI();
+    }
+
+    void DrawRoomLayerFourConnectors(List<Room> rooms)
+    {
+        Handles.BeginGUI();
+        GUI.color = Color.red;
+        foreach (var room in rooms)
+        {
+            foreach (var connectedRoom in room.connectedTo)
+            {
+                Handles.DrawLine(room.rect.center, connectedRoom.rect.center);
+            }
+        }
+        Handles.EndGUI();
     }
 }

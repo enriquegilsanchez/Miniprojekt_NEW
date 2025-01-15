@@ -425,6 +425,7 @@ GameObject:
   - component: {fileID: 760637783}
   - component: {fileID: 760637784}
   - component: {fileID: 760637785}
+  - component: {fileID: 760637786}
   m_Layer: 5
   m_Name: graphGenerator
   m_TagString: Untagged
@@ -485,6 +486,7 @@ MonoBehaviour:
   minSize: 15
   maxSize: 50
   roomGenerator: {fileID: 760637785}
+  roomConnector: {fileID: 760637786}
   floorTilemap: {fileID: 1621888868}
 --- !u!114 &760637785
 MonoBehaviour:
@@ -523,6 +525,18 @@ MonoBehaviour:
   wallLeftTile: {fileID: 11400000, guid: de7ae5493613b6a46aebf91acf7e6460, type: 2}
   wallRightTile: {fileID: 11400000, guid: 7330a8e9cb0c2d14dbf0e271ec534263, type: 2}
   wallBottonTile: {fileID: 11400000, guid: ba1083656fed4b240826600675c747aa, type: 2}
+--- !u!114 &760637786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760637781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06e3dfa861948984780d3c5216be4f6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &812840517
 GameObject:
   m_ObjectHideFlags: 0

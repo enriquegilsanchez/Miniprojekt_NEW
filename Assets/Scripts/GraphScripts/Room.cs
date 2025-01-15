@@ -22,7 +22,9 @@ public class Room
 
     public override string ToString()
     {
-        return "center position: "
+        return "roomNr: "
+            + roomNumber
+            + "center position: "
             + rect.center.ToString()
             + " layer: "
             + layer

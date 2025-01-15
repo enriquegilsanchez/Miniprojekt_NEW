@@ -11,24 +11,26 @@ public class QuadTree
     public Rect container;
     public Rect room;
 
-    public string quadrant;
+    public int quadrant;
     public int depth;
     public int roomNumber;
 
-    public QuadTree(Rect givenContainer)
+    public QuadTree(Rect givenContainer, int givenDepth, int givenQuadrant)
     {
         container = givenContainer;
+        quadrant = givenQuadrant;
+        depth = givenDepth;
     }
 
     internal static QuadTree SplitTree(
         int minSize,
         int maxSize,
         Rect container,
-        int depth = 1,
-        int quadrant = 0
+        int givenDepth = 0,
+        int givenQuadrant = 0
     )
     {
-        var currentNode = new QuadTree(container);
+        var currentNode = new QuadTree(container, givenDepth, givenQuadrant);
         var newContainers = SplitContainer(container);
 
         if (container.width <= 2 * minSize || container.height <= 2 * minSize)
@@ -36,24 +38,24 @@ public class QuadTree
             return currentNode;
         }
 
-        if (depth == 1)
+        if (givenDepth == 0)
         {
-            currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], depth + 1, 1);
-            currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], depth + 1, 2);
-            currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], depth + 1, 3);
-            currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], depth + 1, 4);
+            currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], givenDepth + 1, 1);
+            currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], givenDepth + 1, 2);
+            currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], givenDepth + 1, 3);
+            currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], givenDepth + 1, 4);
             return currentNode;
         }
         else
         {
             var splitProbability = Random.Range(0, 100) > 50 ? true : false;
             // Debug.Log("splitProb: " + splitProbability);
-            if (splitProbability && depth <= 3)
+            if (splitProbability && givenDepth <= 3)
             {
-                currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], depth + 1, 1);
-                currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], depth + 1, 2);
-                currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], depth + 1, 3);
-                currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], depth + 1, 4);
+                currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], givenDepth + 1, 1);
+                currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], givenDepth + 1, 2);
+                currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], givenDepth + 1, 3);
+                currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], givenDepth + 1, 4);
             }
 
             return currentNode;
@@ -115,8 +117,10 @@ public class QuadTree
 
         // Debug.Log("QUAD ROOM width: " + width + " height: " + height);
 
-        int x = Random.Range((int)container.x + 5, (int)container.xMax - width - 5);
-        int y = Random.Range((int)container.y + 5, (int)container.yMax - height - 5);
+        // int x = Random.Range((int)container.x + 5, (int)container.xMax - width - 5);
+        // int y = Random.Range((int)container.y + 5, (int)container.yMax - height - 5);
+        int x = (int)container.center.x - width / 2;
+        int y = (int)container.center.y - height / 2;
 
         return new Rect(x, y, width, height);
     }
