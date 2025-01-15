@@ -25,7 +25,12 @@ public class QuadTreeGenerator : MonoBehaviour
 
     [SerializeField]
     RoomGenerator roomGenerator;
+
+    [SerializeField]
+    RoomConnector roomConnector;
     public Tilemap floorTilemap;
+
+    public List<Room> roomList;
     public List<DungeonTile[,]> allTiles = new List<DungeonTile[,]>();
 
     // Start is called before the first frame update
@@ -37,11 +42,12 @@ public class QuadTreeGenerator : MonoBehaviour
         QuadTree.PlaceRooms(tree, minSize, maxSize);
         // Adds all rooms
         GenerateRoomGrids(tree);
-
-        // For testing single room classification
-        // Rect testRoom = new Rect(0, 0, 5, 7);
-        // allTiles.Add(roomGenerator.RoomToDungeonTiles(testRoom));
-        // var testPos = floorTilemap.WorldToCell(new Vector3Int(0, 0, 0));
+        roomList = GetRoomList(tree);
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            roomList[i].roomNumber = i;
+            Debug.Log(roomList[i].ToString());
+        }
     }
 
     void OnDrawGizmos()
@@ -154,5 +160,11 @@ public class QuadTreeGenerator : MonoBehaviour
         {
             allTiles.Add(roomGenerator.RoomToDungeonTiles(tree.room));
         }
+    }
+
+    List<Room> GetRoomList(QuadTree tree)
+    {
+        roomConnector.GenerateRoomList(tree, null, "");
+        return roomConnector.rooms;
     }
 }

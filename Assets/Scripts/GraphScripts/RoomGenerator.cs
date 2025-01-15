@@ -110,7 +110,7 @@ public class RoomGenerator : MonoBehaviour
                 type = DetermineTileType(j, i, xMin, xMax, yMin, yMax);
                 tiles[arrx, arry] = new DungeonTile(position, type);
                 // Debug.Log("x = " + j + " y = " + i + " arr vars = { " + arrx + " " + arry + " }");
-                Debug.Log(tiles[arrx, arry].ToString());
+                // Debug.Log(tiles[arrx, arry].ToString());
                 arrx++;
             }
             arry++;

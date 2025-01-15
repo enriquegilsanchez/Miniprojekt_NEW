@@ -11,6 +11,10 @@ public class QuadTree
     public Rect container;
     public Rect room;
 
+    public string quadrant;
+    public int depth;
+    public int roomNumber;
+
     public QuadTree(Rect givenContainer)
     {
         container = givenContainer;
@@ -20,7 +24,8 @@ public class QuadTree
         int minSize,
         int maxSize,
         Rect container,
-        int initialSplit = 1
+        int depth = 1,
+        int quadrant = 0
     )
     {
         var currentNode = new QuadTree(container);
@@ -31,24 +36,24 @@ public class QuadTree
             return currentNode;
         }
 
-        if (initialSplit == 1)
+        if (depth == 1)
         {
-            currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], initialSplit + 1);
-            currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], initialSplit + 1);
-            currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], initialSplit + 1);
-            currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], initialSplit + 1);
+            currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], depth + 1, 1);
+            currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], depth + 1, 2);
+            currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], depth + 1, 3);
+            currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], depth + 1, 4);
             return currentNode;
         }
         else
         {
             var splitProbability = Random.Range(0, 100) > 50 ? true : false;
             // Debug.Log("splitProb: " + splitProbability);
-            if (splitProbability && initialSplit <= 3)
+            if (splitProbability && depth <= 3)
             {
-                currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], initialSplit + 1);
-                currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], initialSplit + 1);
-                currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], initialSplit + 1);
-                currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], initialSplit + 1);
+                currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], depth + 1, 1);
+                currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], depth + 1, 2);
+                currentNode.q3 = SplitTree(minSize, maxSize, newContainers[2], depth + 1, 3);
+                currentNode.q4 = SplitTree(minSize, maxSize, newContainers[3], depth + 1, 4);
             }
 
             return currentNode;
