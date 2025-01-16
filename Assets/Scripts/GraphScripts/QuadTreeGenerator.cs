@@ -45,10 +45,10 @@ public class QuadTreeGenerator : MonoBehaviour
         GenerateRoomGrids(tree);
         CorrectFirstQuadrants(tree);
         roomConnector.GenerateRoomList(tree, null, "");
-        roomConnector.ConnectLayerFour();
+        roomConnector.ConnectAllLayers();
         roomList = roomConnector.rooms;
         AssignRoomNumbers(roomList);
-        Debug.Log("quadrant q1: " + tree.q1.quadrant);
+        roomConnector.PrintConnectedRooms();
     }
 
     void OnDrawGizmos()
@@ -203,15 +203,17 @@ public class QuadTreeGenerator : MonoBehaviour
 
     void DrawRoomLayerFourConnectors(List<Room> rooms)
     {
-        Handles.BeginGUI();
-        GUI.color = Color.red;
         foreach (var room in rooms)
         {
             foreach (var connectedRoom in room.connectedTo)
             {
-                Handles.DrawLine(room.rect.center, connectedRoom.rect.center);
+                if (room.layer == 3)
+                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.red);
+                if (room.layer == 2)
+                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.yellow);
+                if (room.layer == 1)
+                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.magenta);
             }
         }
-        Handles.EndGUI();
     }
 }

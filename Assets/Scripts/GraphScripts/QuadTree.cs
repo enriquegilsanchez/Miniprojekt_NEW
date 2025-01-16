@@ -50,7 +50,7 @@ public class QuadTree
         {
             var splitProbability = Random.Range(0, 100) > 50 ? true : false;
             // Debug.Log("splitProb: " + splitProbability);
-            if (splitProbability && givenDepth <= 3)
+            if (splitProbability && givenDepth < 3)
             {
                 currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], givenDepth + 1, 1);
                 currentNode.q2 = SplitTree(minSize, maxSize, newContainers[1], givenDepth + 1, 2);
