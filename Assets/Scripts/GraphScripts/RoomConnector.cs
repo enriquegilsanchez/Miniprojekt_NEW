@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class RoomConnector : MonoBehaviour
@@ -16,7 +17,7 @@ public class RoomConnector : MonoBehaviour
 
     // Depth 2
     // Quadrant 1
-    public string[] possibleConnections11 = { "12", "122", "14", "141" };
+    public string[] possibleConnections11 = { "12", "121", "14", "141" };
     public string[] possibleConnections12 = { "112", "13", "132", "21", "211" };
     public string[] possibleConnections13 = { "123", "14" };
     public string[] possibleConnections14 = { "41", "411" };
@@ -36,8 +37,8 @@ public class RoomConnector : MonoBehaviour
     // Quadrant 4
     public string[] possibleConnections41 = { "42", "421", "44", "441" };
     public string[] possibleConnections42 = { "43", "432" };
-    public string[] possibleConnections43 = { "344", "44", "443" };
-    public string[] possibleConnections44 = { "" };
+    public string[] possibleConnections43 = { "344", "44", "423", "443" };
+    public string[] possibleConnections44 = { "434", "414" };
 
     public RoomConnector()
     {
@@ -54,7 +55,7 @@ public class RoomConnector : MonoBehaviour
         if (QuadTree.IsLeaf(currentNode))
         {
             // Debug.Log(sequence);
-            var trimmedSequence = (sequence + currentNode.quadrant).TrimStart("0");
+            var trimmedSequence = (sequence + currentNode.quadrant).TrimStart("0").Trim();
             rooms.Add(new Room(currentNode.room, previousNode, currentNode.depth, trimmedSequence));
         }
 
@@ -111,8 +112,11 @@ public class RoomConnector : MonoBehaviour
         var reversedSequence = "";
         for (int i = 0; i < rooms.Count; i++)
         {
-            for (int j = i + 1; j < rooms.Count; j++)
+            for (int j = i - 1; j < rooms.Count; j++)
             {
+                if (j < 0)
+                    continue;
+                Debug.Log("Currently comparing room " + (i + 1) + "and " + (j + 1));
                 //skip diagonal connections
                 if (
                     rooms[i].layer == 3
@@ -127,7 +131,7 @@ public class RoomConnector : MonoBehaviour
                     )
                 )
                 {
-                    Debug.Log("Skipped connection for i = " + i + ", j = " + j);
+                    Debug.Log("Skipped connection for room = " + (i + 1) + "and " + (j + 1));
                     continue;
                 }
 
@@ -142,44 +146,65 @@ public class RoomConnector : MonoBehaviour
                         && rooms[i].sequence.Substring(1) == reversedSequence
                     )
                     {
-                        Debug.Log("Connected in step 1, i = " + i + ", j = " + j);
+                        Debug.Log("Connected  room" + (i + 1) + " and " + (j + 1) + " in step 1");
                         rooms[i].connectedTo.Add(rooms[j]);
                         rooms[j].connectedTo.Add(rooms[i]);
                     }
                 }
                 // 2.   Depth 3: Connect  inside same quadrant
-                if (rooms[i].motherNode == rooms[j].motherNode && rooms[i] != rooms[j])
+                if (
+                    rooms[i].layer == 3
+                    && rooms[j].layer == 3
+                    && rooms[i].motherNode == rooms[j].motherNode
+                    && rooms[i] != rooms[j]
+                )
                 {
-                    Debug.Log("Connected in step 2");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 2");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                     // continue; // Should speed up
                 }
                 // 3.   Connect at other depths, starting with 1
-                if (rooms[i].sequence == "1" && possibleConnections1.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "1"
+                    && possibleConnections1.All(element => element.Contains(rooms[j].sequence))
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 3");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 3");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 4.
-                if (rooms[i].sequence == "2" && possibleConnections2.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "2"
+                    && possibleConnections2.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 4");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 4");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 5.
-                if (rooms[i].sequence == "3" && possibleConnections3.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "3"
+                    && possibleConnections3.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 5");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 5");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 6.
-                if (rooms[i].sequence == "4" && possibleConnections4.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "4"
+                    && possibleConnections4.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 6");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 6");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -187,120 +212,185 @@ public class RoomConnector : MonoBehaviour
 
                 // Quadrant 1
                 // 7.
-                if (rooms[i].sequence == "11" && possibleConnections11.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "11"
+                    // && possibleConnections11.Contains(rooms[j].sequence)
+                    && possibleConnections11.All(element => element.Contains(rooms[j].sequence))
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 7");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 7");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 8.
-                if (rooms[i].sequence == "12" && possibleConnections12.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "12"
+                    && possibleConnections12.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 8");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 8");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 9.
-                if (rooms[i].sequence == "13" && possibleConnections13.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "13"
+                    && possibleConnections13.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 9");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 9");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 10.
-                if (rooms[i].sequence == "14" && possibleConnections14.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "14"
+                    && possibleConnections14.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 10");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 10");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
 
                 // Quadrant 2
                 // 11.
-                if (rooms[i].sequence == "21" && possibleConnections21.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "21"
+                    && possibleConnections21.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 11");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 11");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 12.
-                if (rooms[i].sequence == "22" && possibleConnections22.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "22"
+                    && possibleConnections22.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 12");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 12");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 13.
-                if (rooms[i].sequence == "23" && possibleConnections23.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "23"
+                    && possibleConnections23.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 13");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 13");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 14
-                if (rooms[i].sequence == "24" && possibleConnections24.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "24"
+                    && possibleConnections24.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 14");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 14");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
 
                 // Quadrant 3
                 // 15.
-                if (rooms[i].sequence == "31" && possibleConnections31.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "31"
+                    && possibleConnections31.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 15");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 15");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 //16.
-                if (rooms[i].sequence == "32" && possibleConnections32.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "32"
+                    && possibleConnections32.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 16");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 16");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 17.
-                if (rooms[i].sequence == "33" && possibleConnections33.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "33"
+                    && possibleConnections33.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 17");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 17");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 18.
-                if (rooms[i].sequence == "34" && possibleConnections34.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "34"
+                    && possibleConnections34.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 18");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 18");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
 
                 // Quadrant 4
                 // 19.
-                if (rooms[i].sequence == "41" && possibleConnections41.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "41"
+                    && possibleConnections41.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 19");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 19");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 20.
-                if (rooms[i].sequence == "42" && possibleConnections42.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "42"
+                    && possibleConnections42.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 20");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 20");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 21.
-                if (rooms[i].sequence == "43" && possibleConnections43.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "43"
+                    && possibleConnections43.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 21");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 21");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
                 // 22.
-                if (rooms[i].sequence == "44" && possibleConnections44.Contains(rooms[j].sequence))
+                if (
+                    rooms[i].sequence == "44"
+                    && possibleConnections44.Contains(rooms[j].sequence)
+                    && !rooms[i].connectedTo.Contains(rooms[j])
+                )
                 {
-                    Debug.Log("Connected in step 22");
+                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 22");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
