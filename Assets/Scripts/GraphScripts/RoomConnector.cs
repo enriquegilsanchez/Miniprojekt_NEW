@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
 
 public class RoomConnector : MonoBehaviour
 {
@@ -20,10 +21,10 @@ public class RoomConnector : MonoBehaviour
     public string[] possibleConnections11 = { "12", "121", "14", "141" };
     public string[] possibleConnections12 = { "112", "13", "132", "21", "211" };
     public string[] possibleConnections13 = { "123", "14" };
-    public string[] possibleConnections14 = { "41", "411" };
+    public string[] possibleConnections14 = { "114", "41", "411" };
 
     // Quadrant 2
-    public string[] possibleConnections21 = { "22", "24", "241" };
+    public string[] possibleConnections21 = { "22", "24", "221", "241" };
     public string[] possibleConnections22 = { "23", "232" };
     public string[] possibleConnections23 = { "24", "243", "32", "322" };
     public string[] possibleConnections24 = { "" };
@@ -40,9 +41,19 @@ public class RoomConnector : MonoBehaviour
     public string[] possibleConnections43 = { "344", "44", "423", "443" };
     public string[] possibleConnections44 = { "434", "414" };
 
+    public Dictionary<string, string> disallowedConnections = new Dictionary<string, string>();
+
     public RoomConnector()
     {
         rooms = new List<Room>();
+        disallowedConnections.Add("113", "131");
+        disallowedConnections.Add("124", "142");
+        disallowedConnections.Add("213", "231");
+        disallowedConnections.Add("224", "242");
+        disallowedConnections.Add("313", "331");
+        disallowedConnections.Add("324", "342");
+        disallowedConnections.Add("413", "431");
+        disallowedConnections.Add("424", "442");
     }
 
     public void GenerateRoomList(QuadTree currentNode, QuadTree previousNode, string sequence)
@@ -116,7 +127,21 @@ public class RoomConnector : MonoBehaviour
             {
                 if (j < 0)
                     continue;
-                Debug.Log("Currently comparing room " + (i + 1) + "and " + (j + 1));
+                Debug.Log(
+                    "Currently comparing room "
+                        + (i + 1)
+                        + " and "
+                        + (j + 1)
+                        + "\n"
+                        + "room "
+                        + (i + 1)
+                        + " sequence: "
+                        + rooms[i].sequence
+                        + " room "
+                        + (j + 1)
+                        + " sequence: "
+                        + rooms[j].sequence
+                );
                 //skip diagonal connections
                 if (
                     rooms[i].layer == 3
@@ -136,7 +161,11 @@ public class RoomConnector : MonoBehaviour
                 }
 
                 // 1.   Depth 3: Connect Quadrants with each other, hier werden 2 und 1 schraeg verbuinden
-                if (rooms[i].layer == 3 && rooms[j].layer == 3)
+                if (
+                    rooms[i].layer == 3
+                    && rooms[j].layer == 3
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
+                )
                 {
                     charArray = rooms[j].sequence.Substring(1).ToCharArray();
                     Array.Reverse(charArray);
@@ -157,6 +186,7 @@ public class RoomConnector : MonoBehaviour
                     && rooms[j].layer == 3
                     && rooms[i].motherNode == rooms[j].motherNode
                     && rooms[i] != rooms[j]
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 2");
@@ -167,8 +197,9 @@ public class RoomConnector : MonoBehaviour
                 // 3.   Connect at other depths, starting with 1
                 if (
                     rooms[i].sequence == "1"
-                    && possibleConnections1.All(element => element.Contains(rooms[j].sequence))
+                    && possibleConnections1.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 3");
@@ -180,6 +211,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "2"
                     && possibleConnections2.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 4");
@@ -191,6 +223,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "3"
                     && possibleConnections3.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 5");
@@ -202,6 +235,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "4"
                     && possibleConnections4.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 6");
@@ -214,9 +248,9 @@ public class RoomConnector : MonoBehaviour
                 // 7.
                 if (
                     rooms[i].sequence == "11"
-                    // && possibleConnections11.Contains(rooms[j].sequence)
-                    && possibleConnections11.All(element => element.Contains(rooms[j].sequence))
+                    && possibleConnections11.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 7");
@@ -228,6 +262,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "12"
                     && possibleConnections12.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 8");
@@ -239,6 +274,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "13"
                     && possibleConnections13.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 9");
@@ -250,6 +286,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "14"
                     && possibleConnections14.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 10");
@@ -263,6 +300,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "21"
                     && possibleConnections21.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 11");
@@ -274,6 +312,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "22"
                     && possibleConnections22.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 12");
@@ -285,6 +324,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "23"
                     && possibleConnections23.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 13");
@@ -296,6 +336,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "24"
                     && possibleConnections24.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 14");
@@ -309,6 +350,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "31"
                     && possibleConnections31.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 15");
@@ -320,6 +362,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "32"
                     && possibleConnections32.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 16");
@@ -331,6 +374,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "33"
                     && possibleConnections33.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 17");
@@ -342,6 +386,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "34"
                     && possibleConnections34.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 18");
@@ -355,6 +400,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "41"
                     && possibleConnections41.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 19");
@@ -366,6 +412,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "42"
                     && possibleConnections42.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 20");
@@ -377,6 +424,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "43"
                     && possibleConnections43.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 21");
@@ -388,6 +436,7 @@ public class RoomConnector : MonoBehaviour
                     rooms[i].sequence == "44"
                     && possibleConnections44.Contains(rooms[j].sequence)
                     && !rooms[i].connectedTo.Contains(rooms[j])
+                    && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
                     Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 22");
@@ -396,6 +445,45 @@ public class RoomConnector : MonoBehaviour
                 }
             }
         }
+    }
+
+    public bool checkDisallowed(string roomOneSequence, string roomTwoSequence)
+    {
+        var output = "";
+        if (disallowedConnections.ContainsKey(roomOneSequence))
+        {
+            disallowedConnections.TryGetValue(roomOneSequence, out output);
+            if (output == roomTwoSequence)
+            {
+                Debug.Log(
+                    "checkDisallowed for "
+                        + roomOneSequence
+                        + " and "
+                        + roomTwoSequence
+                        + " result: true"
+                );
+                return true;
+            }
+        }
+        if (disallowedConnections.ContainsKey(roomTwoSequence))
+        {
+            disallowedConnections.TryGetValue(roomTwoSequence, out output);
+            if (output == roomOneSequence)
+            {
+                Debug.Log(
+                    "checkDisallowed for "
+                        + roomOneSequence
+                        + " and "
+                        + roomTwoSequence
+                        + " result: true"
+                );
+                return true;
+            }
+        }
+        Debug.Log(
+            "checkDisallowed for " + roomOneSequence + " and " + roomTwoSequence + " result: false"
+        );
+        return false;
     }
 
     public void PrintConnectedRooms()

@@ -21,10 +21,11 @@ public class PlayerController : MonoBehaviour
     private float dashingTime = 0.2f;
     private float dashingCooldown = 2f;
     public GameObject control;
-    [SerializeField] private TrailRenderer tr;
+
+    [SerializeField]
+    private TrailRenderer tr;
 
     public Slider DashBar;
-
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +40,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!control.GetComponent<GameControl>().MenuIsOpen && !control.GetComponent<GameControl>().gameover)
+        if (
+            !control.GetComponent<GameControl>().MenuIsOpen
+            && !control.GetComponent<GameControl>().gameover
+        )
         {
             if (DashBar.value < 2)
             {
@@ -78,15 +82,16 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Dash());
             }
         }
-
     }
-
 
     private IEnumerator Dash()
     {
         canDash = false;
         isDashing = true;
-        rb.velocity = new UnityEngine.Vector2(moveDirection.x * dashingPower, moveDirection.y * dashingPower);
+        rb.velocity = new UnityEngine.Vector2(
+            moveDirection.x * dashingPower,
+            moveDirection.y * dashingPower
+        );
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         tr.emitting = false;
@@ -101,7 +106,10 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        rb.velocity = new UnityEngine.Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        rb.velocity = new UnityEngine.Vector2(
+            moveDirection.x * moveSpeed,
+            moveDirection.y * moveSpeed
+        );
         animator.SetFloat("speed", rb.velocity.magnitude);
     }
 
@@ -109,9 +117,6 @@ public class PlayerController : MonoBehaviour
     {
         health += val;
         animator.SetFloat("hp", health);
-        if (health <= 0)
-        {
-
-        }
+        if (health <= 0) { }
     }
 }

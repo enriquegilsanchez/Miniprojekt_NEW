@@ -24,7 +24,7 @@ public class Room
     {
         return "roomNr: "
             + roomNumber
-            + "center position: "
+            + " center position: "
             + rect.center.ToString()
             + " layer: "
             + layer

@@ -30,7 +30,15 @@ public class QuadTreeGenerator : MonoBehaviour
     RoomConnector roomConnector;
     public Tilemap floorTilemap;
 
+    [SerializeField]
+    public EnemySpawner enemySpawner;
+
+    [SerializeField]
+    public GameObject player;
+
     public List<Room> roomList;
+    public Room spawnRoom;
+    public Room bossRoom;
     public List<DungeonTile[,]> allTiles = new List<DungeonTile[,]>();
     private bool drawnRoomNumbers = false;
 
@@ -48,7 +56,9 @@ public class QuadTreeGenerator : MonoBehaviour
         roomConnector.ConnectAllLayers();
         roomList = roomConnector.rooms;
         AssignRoomNumbers(roomList);
-        roomConnector.PrintConnectedRooms();
+        // roomConnector.PrintConnectedRooms();
+        DetermineSpecialRooms(roomList);
+        SetSpawnPoint();
     }
 
     void OnDrawGizmos()
@@ -215,5 +225,17 @@ public class QuadTreeGenerator : MonoBehaviour
                     Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.magenta);
             }
         }
+    }
+
+    void DetermineSpecialRooms(List<Room> rooms)
+    {
+        spawnRoom = rooms[0];
+        bossRoom = rooms[rooms.Count - 1];
+    }
+
+    void SetSpawnPoint()
+    {
+        Debug.Log("Should move player to: " + spawnRoom.rect.center.ToString());
+        player.transform.Translate(spawnRoom.rect.center);
     }
 }

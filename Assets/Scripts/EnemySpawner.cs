@@ -5,8 +5,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     private GameObject enemyPrefab;
     public GameObject archer;
+
     [SerializeField]
     private float minSpawnTime;
+
     [SerializeField]
     private float maxSpawnTime;
 

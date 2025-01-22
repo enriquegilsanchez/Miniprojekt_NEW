@@ -21,12 +21,12 @@ public class GameControl : MonoBehaviour
 
     public bool MenuIsOpen = false;
     public bool gameover = false;
+
     /* public AudioSource AudioSource;
     public AudioClip levelsound;
     public AudioClip gameOversound; */
     public GameObject music;
     public GameObject gameoverMusic;
-
 
     void Start()
     {
@@ -42,7 +42,6 @@ public class GameControl : MonoBehaviour
         Menu.SetActive(false);
         music.SetActive(true);
         gameover = false;
-
     }
 
     void Update()
@@ -69,21 +68,17 @@ public class GameControl : MonoBehaviour
         {
             if (MenuIsOpen)
             {
-
                 Menu.SetActive(false);
                 Time.timeScale = 1f;
                 MenuIsOpen = false;
             }
             else
             {
-
                 Menu.SetActive(true);
                 Time.timeScale = 0f;
                 MenuIsOpen = true;
             }
-
         }
-
     }
 
     public void BTNRestart()
@@ -97,8 +92,6 @@ public class GameControl : MonoBehaviour
         GameOver.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
-
 
     public void GetHp()
     {
