@@ -117,6 +117,7 @@ public class RoomConnector : MonoBehaviour
         }
     }
 
+    #region Raumverbindung
     public void ConnectAllLayers()
     {
         char[] charArray = { };
@@ -485,6 +486,8 @@ public class RoomConnector : MonoBehaviour
         );
         return false;
     }
+
+    #endregion
 
     public void PrintConnectedRooms()
     {
