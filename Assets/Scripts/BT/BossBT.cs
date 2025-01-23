@@ -22,8 +22,6 @@ public class BossBT : MonoBehaviour
 
     public int health = 100;
     public int maxHealth = 100;
-    public float iFrame = 1f;
-    public float time = 0f;
     public float rangedCooldown = 0f; // Current cooldown time
     public float rangedCooldownDuration = 5f; // Total cooldown duration
     public float meleeCooldown = 0f; // Current cooldown time for melee attacks

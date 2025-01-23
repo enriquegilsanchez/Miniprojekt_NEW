@@ -34,7 +34,7 @@ public class GameControl : MonoBehaviour
         GameOver.SetActive(false);
         Player = GameObject.FindGameObjectWithTag("Player");
         pc = Player.GetComponent<PlayerController>();
-        PlayerHealth = 5;
+        PlayerHealth = 20;
         HealthBar.maxValue = PlayerHealth;
         HealthBar.value = PlayerHealth;
         Debug.Log("playerHealth:" + PlayerHealth);
@@ -90,7 +90,7 @@ public class GameControl : MonoBehaviour
     {
         Time.timeScale = 1;
         Score = 0;
-        PlayerHealth = 5;
+        PlayerHealth = 20;
         HealthBar.maxValue = PlayerHealth;
         HealthBar.value = PlayerHealth;
         gameoverMusic.SetActive(false);
