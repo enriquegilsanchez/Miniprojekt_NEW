@@ -512,29 +512,33 @@ public class RoomConnector : MonoBehaviour
 
     public void PlaceDoors(GameObject doorPrefab, Room room)
     {
+        // Calculate respective door positions starting left
         var leftX = room.rect.center.x - room.rect.width * 0.5 + 1;
         var leftY = room.rect.center.y;
         var leftPos = new Vector2((float)leftX, (float)leftY);
-
+        // right
         var rightX = room.rect.center.x + room.rect.width * 0.5 - 1;
         var rightY = room.rect.center.y;
         var rightPos = new Vector2((float)rightX, (float)rightY);
-
+        // up
         var upX = room.rect.center.x;
         var upY = room.rect.center.y + room.rect.height * 0.5 - 3;
         var upPos = new Vector2((float)upX, (float)upY);
-
+        // down
         var downX = room.rect.center.x;
         var downY = room.rect.y + 1;
         var downPos = new Vector2((float)downX, (float)downY);
 
+        // 90 Degree rotation for lower and upper doors
         var upperRotation = UnityEngine.Quaternion.Euler(0, 0, 0 + 90);
 
+        // Instantiate actual door gameObjects
         room.leftDoor = Instantiate(doorPrefab, leftPos, doorPrefab.transform.rotation);
         room.rightDoor = Instantiate(doorPrefab, rightPos, doorPrefab.transform.rotation);
         room.upperDoor = Instantiate(doorPrefab, upPos, upperRotation);
         room.lowerDoor = Instantiate(doorPrefab, downPos, upperRotation);
 
+        // set Door positions
         room.leftDoor.GetComponent<Door>().position = "left";
         room.rightDoor.GetComponent<Door>().position = "right";
         room.upperDoor.GetComponent<Door>().position = "upper";

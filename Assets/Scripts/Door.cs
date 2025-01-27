@@ -19,30 +19,29 @@ public class Door : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Entered door");
-
+        // Teleport the player to the next room with clearance depending on which direction the door was facing
         if (position == "left")
             collision.gameObject.transform.position = new Vector3(
-                connectedTo.transform.position.x - 5,
+                connectedTo.transform.position.x - 2,
                 connectedTo.transform.position.y,
                 connectedTo.transform.position.z
             );
         if (position == "right")
             collision.gameObject.transform.position = new Vector3(
-                connectedTo.transform.position.x + 5,
+                connectedTo.transform.position.x + 2,
                 connectedTo.transform.position.y,
                 connectedTo.transform.position.z
             );
         if (position == "upper")
             collision.gameObject.transform.position = new Vector3(
                 connectedTo.transform.position.x,
-                connectedTo.transform.position.y + 5,
+                connectedTo.transform.position.y + 2,
                 connectedTo.transform.position.z
             );
         if (position == "lower")
             collision.gameObject.transform.position = new Vector3(
                 connectedTo.transform.position.x,
-                connectedTo.transform.position.y - 5,
+                connectedTo.transform.position.y - 2,
                 connectedTo.transform.position.z
             );
     }
