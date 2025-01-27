@@ -130,7 +130,7 @@ public class RoomConnector : MonoBehaviour
             PlaceDoors(doorPrefab, rooms[i]);
             for (int j = i - 1; j < rooms.Count; j++)
             {
-                if (j < 0)
+                if (j < 0 || j == i)
                     continue;
                 Debug.Log(
                     "Currently comparing room "

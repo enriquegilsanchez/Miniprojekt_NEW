@@ -23,26 +23,26 @@ public class Door : MonoBehaviour
 
         if (position == "left")
             collision.gameObject.transform.position = new Vector3(
-                connectedTo.transform.position.x + 5,
+                connectedTo.transform.position.x - 5,
                 connectedTo.transform.position.y,
                 connectedTo.transform.position.z
             );
         if (position == "right")
             collision.gameObject.transform.position = new Vector3(
-                connectedTo.transform.position.x - 5,
+                connectedTo.transform.position.x + 5,
                 connectedTo.transform.position.y,
                 connectedTo.transform.position.z
             );
         if (position == "upper")
             collision.gameObject.transform.position = new Vector3(
                 connectedTo.transform.position.x,
-                connectedTo.transform.position.y - 5,
+                connectedTo.transform.position.y + 5,
                 connectedTo.transform.position.z
             );
         if (position == "lower")
             collision.gameObject.transform.position = new Vector3(
                 connectedTo.transform.position.x,
-                connectedTo.transform.position.y + 5,
+                connectedTo.transform.position.y - 5,
                 connectedTo.transform.position.z
             );
     }
