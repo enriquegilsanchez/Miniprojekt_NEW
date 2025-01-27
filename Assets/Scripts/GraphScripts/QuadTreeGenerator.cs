@@ -59,6 +59,7 @@ public class QuadTreeGenerator : MonoBehaviour
         // roomConnector.PrintConnectedRooms();
         DetermineSpecialRooms(roomList);
         SetSpawnPoint();
+        roomConnector.SetDoorDirections();
     }
 
     void OnDrawGizmos()
@@ -235,7 +236,7 @@ public class QuadTreeGenerator : MonoBehaviour
 
     void SetSpawnPoint()
     {
-        Debug.Log("Should move player to: " + spawnRoom.rect.center.ToString());
+        // Debug.Log("Should move player to: " + spawnRoom.rect.center.ToString());
         player.transform.Translate(spawnRoom.rect.center);
     }
 }

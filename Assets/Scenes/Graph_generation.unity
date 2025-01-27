@@ -1450,6 +1450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e3dfa861948984780d3c5216be4f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorPrefab: {fileID: 6857676513838292539, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
   possibleConnections1:
   - 2
   - 21
@@ -2680,6 +2681,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1010249513}
   m_CullTransparentMesh: 1
+--- !u!1001 &1019201993
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6857676513838292539, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
+      propertyPath: m_Name
+      value: Door
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
 --- !u!1 &1316654880
 GameObject:
   m_ObjectHideFlags: 0
@@ -4501,37 +4559,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2066519828
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2066519829}
-  m_Layer: 0
-  m_Name: Door
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2066519829
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2066519828}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 173.86488, y: 97.56165, z: 0.75108814}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2119886163
 GameObject:
   m_ObjectHideFlags: 0
@@ -4843,4 +4870,4 @@ SceneRoots:
   - {fileID: 814679366}
   - {fileID: 1866166182}
   - {fileID: 2142913638}
-  - {fileID: 2066519829}
+  - {fileID: 1019201993}

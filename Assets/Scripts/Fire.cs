@@ -11,6 +11,7 @@ public class Fire : MonoBehaviour
     private UnityEngine.Vector3 mousePos;
     private Rigidbody2D rb;
     public float fireForce = 40f;
+
     void Start()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -20,17 +21,16 @@ public class Fire : MonoBehaviour
         rb.velocity = new UnityEngine.Vector2(direction.x, direction.y).normalized * fireForce;
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = UnityEngine.Quaternion.Euler(0, 0, rot + 90);
-
     }
 
-    void Update()
-    {
-
-    }
+    void Update() { }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Player_Bullet"))
+        if (
+            collision.gameObject.CompareTag("Player")
+            || collision.gameObject.CompareTag("Player_Bullet")
+        )
         {
             Physics2D.IgnoreCollision(collision.collider, GetComponent<BoxCollider2D>());
             return;

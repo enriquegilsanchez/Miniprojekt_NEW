@@ -10,6 +10,10 @@ public class Room
     public int layer;
     public List<Room> connectedTo;
     public string sequence;
+    public GameObject upperDoor;
+    public GameObject lowerDoor;
+    public GameObject leftDoor;
+    public GameObject rightDoor;
 
     public Room(Rect givenRect, QuadTree givenNode, int givenLayer, string givenSequence)
     {

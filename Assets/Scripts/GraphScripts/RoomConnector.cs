@@ -11,6 +11,9 @@ public class RoomConnector : MonoBehaviour
 {
     public List<Room> rooms;
 
+    [SerializeField]
+    public GameObject doorPrefab;
+
     public string[] possibleConnections1 = { "2", "21", "211", "4", "41", "411" };
     public string[] possibleConnections2 = { "12", "122", "3", "32", "322" };
     public string[] possibleConnections3 = { "23", "233", "4", "43", "433" };
@@ -124,6 +127,7 @@ public class RoomConnector : MonoBehaviour
         var reversedSequence = "";
         for (int i = 0; i < rooms.Count; i++)
         {
+            PlaceDoors(doorPrefab, rooms[i]);
             for (int j = i - 1; j < rooms.Count; j++)
             {
                 if (j < 0)
@@ -502,6 +506,91 @@ public class RoomConnector : MonoBehaviour
                         + connectedRoom.roomNumber
                         + "\n"
                 );
+            }
+        }
+    }
+
+    public void PlaceDoors(GameObject doorPrefab, Room room)
+    {
+        var leftX = room.rect.center.x - room.rect.width * 0.5 + 1;
+        var leftY = room.rect.center.y;
+        var leftPos = new Vector2((float)leftX, (float)leftY);
+
+        var rightX = room.rect.center.x + room.rect.width * 0.5 - 1;
+        var rightY = room.rect.center.y;
+        var rightPos = new Vector2((float)rightX, (float)rightY);
+
+        var upX = room.rect.center.x;
+        var upY = room.rect.center.y + room.rect.height * 0.5 - 3;
+        var upPos = new Vector2((float)upX, (float)upY);
+
+        var downX = room.rect.center.x;
+        var downY = room.rect.y + 1;
+        var downPos = new Vector2((float)downX, (float)downY);
+
+        var upperRotation = UnityEngine.Quaternion.Euler(0, 0, 0 + 90);
+
+        room.leftDoor = Instantiate(doorPrefab, leftPos, doorPrefab.transform.rotation);
+        room.rightDoor = Instantiate(doorPrefab, rightPos, doorPrefab.transform.rotation);
+        room.upperDoor = Instantiate(doorPrefab, upPos, upperRotation);
+        room.lowerDoor = Instantiate(doorPrefab, downPos, upperRotation);
+
+        room.leftDoor.GetComponent<Door>().position = "left";
+        room.rightDoor.GetComponent<Door>().position = "right";
+        room.upperDoor.GetComponent<Door>().position = "upper";
+        room.lowerDoor.GetComponent<Door>().position = "lower";
+
+        // Deactivate all doors
+        room.leftDoor.SetActive(false);
+        room.rightDoor.SetActive(false);
+        room.upperDoor.SetActive(false);
+        room.lowerDoor.SetActive(false);
+    }
+
+    public void SetDoorDirections()
+    {
+        var checkDirection = new Vector2(0, 0);
+        Door doorScript = new Door();
+        foreach (var room in rooms)
+        {
+            foreach (var connectedRoom in room.connectedTo)
+            {
+                checkDirection = connectedRoom.rect.center - room.rect.center;
+                checkDirection.Normalize();
+                if (Math.Abs(checkDirection.x) > Math.Abs(checkDirection.y))
+                {
+                    if (checkDirection.x < 0)
+                    {
+                        Debug.Log("activated left door for room: " + room.roomNumber);
+                        room.leftDoor.SetActive(true);
+                        room.leftDoor.GetComponent<Door>().connectedTo = connectedRoom.rightDoor;
+                        connectedRoom.rightDoor.GetComponent<Door>().connectedTo = room.leftDoor;
+                    }
+                    else
+                    {
+                        Debug.Log("activated right door for room: " + room.roomNumber);
+                        room.rightDoor.SetActive(true);
+                        room.rightDoor.GetComponent<Door>().connectedTo = connectedRoom.leftDoor;
+                        connectedRoom.leftDoor.GetComponent<Door>().connectedTo = room.rightDoor;
+                    }
+                }
+                else
+                {
+                    if (checkDirection.y > 0)
+                    {
+                        Debug.Log("activated up door for room: " + room.roomNumber);
+                        room.upperDoor.SetActive(true);
+                        room.upperDoor.GetComponent<Door>().connectedTo = connectedRoom.lowerDoor;
+                        connectedRoom.lowerDoor.GetComponent<Door>().connectedTo = room.upperDoor;
+                    }
+                    else
+                    {
+                        Debug.Log("activated down door for room: " + room.roomNumber);
+                        room.lowerDoor.SetActive(true);
+                        room.lowerDoor.GetComponent<Door>().connectedTo = connectedRoom.upperDoor;
+                        connectedRoom.upperDoor.GetComponent<Door>().connectedTo = room.lowerDoor;
+                    }
+                }
             }
         }
     }
