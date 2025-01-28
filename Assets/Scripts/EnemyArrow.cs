@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class enemy_arrow : MonoBehaviour
 {
-
     private Rigidbody2D rb;
     public float fireForce = 15f;
 
     private GameObject Player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,14 +20,10 @@ public class enemy_arrow : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
-    }
+    void Update() { }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.CompareTag("Enemy"))
         {
             //Physics2D.IgnoreCollision(collision.collider, Ga);
@@ -35,9 +31,9 @@ public class enemy_arrow : MonoBehaviour
         Destroy(gameObject);
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Arrow Collision");
+            // Debug.Log("Arrow Collision");
 
-            Debug.Log("Player hit" + collision.gameObject.name);
+            // Debug.Log("Player hit" + collision.gameObject.name);
             collision.gameObject.SendMessage("ChangeHp", -1);
         }
     }

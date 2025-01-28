@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SkeletonArcher : MonoBehaviour
 {
-
     Vector3 PlayerPos;
 
     GameObject Player;
@@ -15,16 +14,18 @@ public class SkeletonArcher : MonoBehaviour
     Vector2 movement;
     public EnemyWeapon weapon;
 
-
     private float shotTimer = 0f;
 
     [SerializeField]
     int health;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.FindGameObjectWithTag("Player");
-        GameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
+        GameControl = GameObject
+            .FindGameObjectWithTag("GameController")
+            .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
         animator.SetFloat("hp", health);
     }
@@ -48,6 +49,7 @@ public class SkeletonArcher : MonoBehaviour
         }
         movement = direction;
     }
+
     void FixedUpdate()
     {
         if (health <= 0)
@@ -83,6 +85,4 @@ public class SkeletonArcher : MonoBehaviour
             Destroy(gameObject, 1f);
         }
     }
-
-
 }

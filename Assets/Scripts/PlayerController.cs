@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 weapon.Shoot();
-                Debug.Log(mousePosition);
+                // Debug.Log(mousePosition);
             }
 
             if (isDashing)

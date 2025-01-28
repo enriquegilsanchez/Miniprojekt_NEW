@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
     Vector3 PlayerPos;
 
     GameObject Player;
@@ -13,7 +12,6 @@ public class Enemy : MonoBehaviour
     float moveSpeed = 3f;
     Rigidbody2D rb;
     Vector2 movement;
-    
 
     private float iFrame = 1f;
     private float time = 0f;
@@ -21,13 +19,14 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     int health;
 
-   
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.FindGameObjectWithTag("Player");
-       
-        GameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
+
+        GameControl = GameObject
+            .FindGameObjectWithTag("GameController")
+            .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
         animator.SetFloat("hp", health);
     }
@@ -50,9 +49,8 @@ public class Enemy : MonoBehaviour
             spriteRenderer.flipX = false;
         }
         movement = direction;
-
-        
     }
+
     void FixedUpdate()
     {
         if (health <= 0)
@@ -93,6 +91,7 @@ public class Enemy : MonoBehaviour
             Player.SendMessage("ChangeHp", -1);
         }
     }
+
     public void ChangeHp(int val)
     {
         health += val;
@@ -105,7 +104,4 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject, 1f);
         }
     }
-
-   
-
 }

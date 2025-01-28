@@ -14,6 +14,9 @@ public class Room
     public GameObject lowerDoor;
     public GameObject leftDoor;
     public GameObject rightDoor;
+    public bool isCleared;
+
+    public int numberOfEnemies;
 
     public Room(Rect givenRect, QuadTree givenNode, int givenLayer, string givenSequence)
     {
@@ -22,6 +25,8 @@ public class Room
         layer = givenLayer;
         sequence = givenSequence;
         connectedTo = new List<Room>();
+        isCleared = false;
+        numberOfEnemies = 0;
     }
 
     public override string ToString()

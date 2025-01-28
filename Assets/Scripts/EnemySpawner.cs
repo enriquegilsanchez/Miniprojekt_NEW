@@ -4,6 +4,8 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
+
+    [SerializeField]
     public GameObject archer;
 
     [SerializeField]

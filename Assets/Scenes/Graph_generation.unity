@@ -1584,6 +1584,9 @@ MonoBehaviour:
   gameover: 0
   music: {fileID: 2142913636}
   gameoverMusic: {fileID: 814679364}
+  enemyPrefab: {fileID: 1544139902125019112, guid: 4f4ff7ec0cf94aa46b59036167cb7620, type: 3}
+  archerPrefab: {fileID: 3158956508551886123, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
+  bossPrefab: {fileID: 3569256027862732494, guid: 39324e8c9c108e94a959b75d517792d4, type: 3}
 --- !u!4 &762093386
 Transform:
   m_ObjectHideFlags: 0
@@ -2085,7 +2088,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2681,63 +2684,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1010249513}
   m_CullTransparentMesh: 1
---- !u!1001 &1019201993
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1494989623125045462, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6857676513838292539, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
-      propertyPath: m_Name
-      value: Door
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2bc3320a44518614d83d12e6d301796b, type: 3}
 --- !u!1 &1316654880
 GameObject:
   m_ObjectHideFlags: 0
@@ -4870,4 +4816,3 @@ SceneRoots:
   - {fileID: 814679366}
   - {fileID: 1866166182}
   - {fileID: 2142913638}
-  - {fileID: 1019201993}

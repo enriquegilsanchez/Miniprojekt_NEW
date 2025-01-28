@@ -42,9 +42,14 @@ public class QuadTreeGenerator : MonoBehaviour
     public List<DungeonTile[,]> allTiles = new List<DungeonTile[,]>();
     private bool drawnRoomNumbers = false;
 
+    Component gameControl;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameControl = GameObject
+            .FindGameObjectWithTag("GameController")
+            .GetComponent("GameControl");
         allTiles.Clear();
         Rect rect = new Rect(quadPos[0], quadPos[1], quadSize, quadSize);
         tree = QuadTree.SplitTree(minSize, maxSize, rect);
@@ -57,7 +62,7 @@ public class QuadTreeGenerator : MonoBehaviour
         roomList = roomConnector.rooms;
         AssignRoomNumbers(roomList);
         // roomConnector.PrintConnectedRooms();
-        DetermineSpecialRooms(roomList);
+        DetermineSpawnAndBossRooms(roomList);
         SetSpawnPoint();
         roomConnector.SetDoorDirections();
     }
@@ -73,7 +78,7 @@ public class QuadTreeGenerator : MonoBehaviour
         if (!drawnRoomNumbers && roomList != null)
         {
             DrawRoomNumbers(roomList);
-            DrawRoomLayerFourConnectors(roomList);
+            DrawRoomConnectors(roomList);
         }
     }
 
@@ -212,7 +217,7 @@ public class QuadTreeGenerator : MonoBehaviour
         Handles.EndGUI();
     }
 
-    void DrawRoomLayerFourConnectors(List<Room> rooms)
+    void DrawRoomConnectors(List<Room> rooms)
     {
         foreach (var room in rooms)
         {
@@ -228,10 +233,36 @@ public class QuadTreeGenerator : MonoBehaviour
         }
     }
 
-    void DetermineSpecialRooms(List<Room> rooms)
+    void DetermineSpawnAndBossRooms(List<Room> rooms)
     {
         spawnRoom = rooms[0];
         bossRoom = rooms[rooms.Count - 1];
+        var minRoom = rooms[0];
+        var maxRoom = rooms[0];
+
+        foreach (var room in rooms)
+        {
+            if (room.rect.size.magnitude > maxRoom.rect.size.magnitude)
+            {
+                maxRoom = room;
+            }
+            if (room.rect.size.magnitude < minRoom.rect.size.magnitude)
+            {
+                minRoom = room;
+            }
+        }
+        spawnRoom = minRoom;
+        bossRoom = maxRoom;
+        Debug.Log(
+            "spawn room is room nr: "
+                + spawnRoom.roomNumber
+                + "\n"
+                + "boss room is room nr: "
+                + bossRoom.roomNumber
+        );
+        spawnRoom.isCleared = true;
+        gameControl.SendMessage("SetSpawnRoom", spawnRoom);
+        gameControl.SendMessage("SetBossRoom", bossRoom);
     }
 
     void SetSpawnPoint()

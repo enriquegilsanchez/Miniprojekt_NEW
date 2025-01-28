@@ -28,6 +28,22 @@ public class GameControl : MonoBehaviour
     public GameObject music;
     public GameObject gameoverMusic;
 
+    public Room currentRoom;
+
+    public bool[] connectedDoors = { false, false, false, false };
+
+    public Room spawnRoom;
+    public Room bossRoom;
+
+    [SerializeField]
+    private GameObject enemyPrefab;
+
+    [SerializeField]
+    public GameObject archerPrefab;
+
+    [SerializeField]
+    public GameObject bossPrefab;
+
     void Start()
     {
         Score = 0;
@@ -42,6 +58,7 @@ public class GameControl : MonoBehaviour
         Menu.SetActive(false);
         music.SetActive(true);
         gameover = false;
+        currentRoom = null;
     }
 
     void Update()
@@ -101,5 +118,107 @@ public class GameControl : MonoBehaviour
     public void ChangeScore(int val)
     {
         Score += val;
+        currentRoom.numberOfEnemies--;
+        if (currentRoom.numberOfEnemies == 0)
+        {
+            currentRoom.isCleared = true;
+            ActivateDoors();
+        }
+    }
+
+    public void SetCurrentRoom(Room room)
+    {
+        currentRoom = room;
+        Debug.Log("current room is: " + room.ToString());
+
+        if (!currentRoom.isCleared)
+        {
+            DeactivateDoors();
+            SpawnEnemies();
+        }
+    }
+
+    public void SetSpawnRoom(Room room)
+    {
+        spawnRoom = room;
+    }
+
+    public void SetBossRoom(Room room)
+    {
+        bossRoom = room;
+    }
+
+    public void SpawnEnemies()
+    {
+        if (currentRoom == spawnRoom)
+            return;
+        if (currentRoom == bossRoom)
+        {
+            GameObject boss = Instantiate(bossPrefab, bossRoom.rect.center, Quaternion.identity);
+            currentRoom.numberOfEnemies = 1;
+        }
+        else
+        {
+            // Set spawn range
+            var spawnMinX = currentRoom.rect.x + 3;
+            var spawnMaxX = currentRoom.rect.xMax - 3;
+            var spawnMinY = currentRoom.rect.y + 3;
+            var spawnMaxY = currentRoom.rect.yMax - 3;
+            var xRange = 0f;
+            var yRange = 0f;
+
+            // Determine enemy number and archer number
+            var numberOfEnemies = Random.Range(2, 6);
+            var checkArcher = 50;
+            var archerIncluded = Random.Range(0, 100) > checkArcher ? true : false;
+
+            for (var i = 0; i < numberOfEnemies; i++)
+            {
+                // Determine Random spawn position in range
+                xRange = Random.Range(spawnMinX, spawnMaxX);
+                yRange = Random.Range(spawnMinY, spawnMaxY);
+                // spawn archer, max 2
+                if (archerIncluded)
+                {
+                    Instantiate(archerPrefab, new Vector2(xRange, yRange), Quaternion.identity);
+                    checkArcher += 30;
+                    archerIncluded = Random.Range(0, 100) > checkArcher ? true : false;
+                    continue;
+                }
+                Instantiate(enemyPrefab, new Vector2(xRange, yRange), Quaternion.identity);
+            }
+            currentRoom.numberOfEnemies = numberOfEnemies;
+        }
+    }
+
+    public void DeactivateDoors()
+    {
+        // Remember connected doors
+        if (currentRoom.leftDoor.activeSelf)
+            connectedDoors[0] = true;
+        if (currentRoom.rightDoor.activeSelf)
+            connectedDoors[1] = true;
+        if (currentRoom.upperDoor.activeSelf)
+            connectedDoors[2] = true;
+        if (currentRoom.lowerDoor.activeSelf)
+            connectedDoors[3] = true;
+
+        // deactivate all doors
+        currentRoom.leftDoor.SetActive(false);
+        currentRoom.rightDoor.SetActive(false);
+        currentRoom.upperDoor.SetActive(false);
+        currentRoom.lowerDoor.SetActive(false);
+    }
+
+    public void ActivateDoors()
+    {
+        if (connectedDoors[0])
+            currentRoom.leftDoor.SetActive(true);
+        if (connectedDoors[1])
+            currentRoom.rightDoor.SetActive(true);
+        if (connectedDoors[2])
+            currentRoom.upperDoor.SetActive(true);
+        if (connectedDoors[3])
+            currentRoom.lowerDoor.SetActive(true);
     }
 }

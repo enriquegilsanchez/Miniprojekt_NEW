@@ -7,11 +7,15 @@ public class Door : MonoBehaviour
 {
     public GameObject connectedTo;
     public string position;
+    Component gameControl;
+    public Room room;
 
-    void Start() { }
-
-    // Update is called once per frame
-    void Update() { }
+    void Start()
+    {
+        gameControl = GameObject
+            .FindGameObjectWithTag("GameController")
+            .GetComponent("GameControl");
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -44,5 +48,6 @@ public class Door : MonoBehaviour
                 connectedTo.transform.position.y - 2,
                 connectedTo.transform.position.z
             );
+        gameControl.SendMessage("SetCurrentRoom", connectedTo.GetComponent<Door>().room);
     }
 }

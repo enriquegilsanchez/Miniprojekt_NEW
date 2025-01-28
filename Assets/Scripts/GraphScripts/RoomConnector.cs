@@ -544,6 +544,12 @@ public class RoomConnector : MonoBehaviour
         room.upperDoor.GetComponent<Door>().position = "upper";
         room.lowerDoor.GetComponent<Door>().position = "lower";
 
+        // Set room reference
+        room.leftDoor.GetComponent<Door>().room = room;
+        room.rightDoor.GetComponent<Door>().room = room;
+        room.upperDoor.GetComponent<Door>().room = room;
+        room.lowerDoor.GetComponent<Door>().room = room;
+
         // Deactivate all doors
         room.leftDoor.SetActive(false);
         room.rightDoor.SetActive(false);

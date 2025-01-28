@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
 
     public GameObject gunSound;
     UnityEngine.Vector3 mousePosition;
+
     public void Shoot()
     {
         Instantiate(gunSound, firePoint.position, firePoint.rotation);

@@ -40,7 +40,7 @@ public class Fire : MonoBehaviour
         Destroy(gameObject);
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Enemy hit" + collision.gameObject.name);
+            // Debug.Log("Enemy hit" + collision.gameObject.name);
             collision.gameObject.SendMessage("ChangeHp", -1);
         }
     }
