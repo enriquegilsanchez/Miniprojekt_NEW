@@ -28,13 +28,18 @@ public class BossPatrol : Node
             return NodeState.Success;
         }
 
-        Vector2 direction = ((Vector2)enemy.targetPoint - (Vector2)enemyTransform.position).normalized;
+        Vector2 direction = (
+            (Vector2)enemy.targetPoint - (Vector2)enemyTransform.position
+        ).normalized;
         enemy.rb.velocity = direction * enemy.speed;
 
         // Check if the enemy reached the target point
         if (Vector2.Distance(enemyTransform.position, enemy.targetPoint) < 0.1f)
         {
-            enemy.targetPoint = (enemy.targetPoint == enemy.pointA.position) ? enemy.pointB.position : enemy.pointA.position;
+            enemy.targetPoint =
+                (enemy.targetPoint == enemy.pointA.position)
+                    ? enemy.pointB.position
+                    : enemy.pointA.position;
         }
 
         // Flip sprite based on direction

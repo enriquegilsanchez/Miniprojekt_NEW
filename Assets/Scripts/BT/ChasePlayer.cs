@@ -18,7 +18,9 @@ public class ChasePlayerTask : Node
             return NodeState.Failure; // Stop chasing if health is zero
         }
 
-        Vector2 directionToPlayer = ((Vector2)enemy.playerTransform.position - (Vector2)enemy.transform.position).normalized;
+        Vector2 directionToPlayer = (
+            (Vector2)enemy.playerTransform.position - (Vector2)enemy.transform.position
+        ).normalized;
         enemy.rb.velocity = directionToPlayer * enemy.speed;
 
         enemy.spriteRenderer.flipX = directionToPlayer.x <= 0;

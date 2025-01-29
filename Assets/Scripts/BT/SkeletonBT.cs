@@ -31,7 +31,9 @@ public class SkeletonBT : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        gameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
+        gameControl = GameObject
+            .FindGameObjectWithTag("GameController")
+            .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
         animator.SetFloat("hp", health);
 
@@ -39,20 +41,26 @@ public class SkeletonBT : MonoBehaviour
         targetPoint = pointA.position;
 
         // Construct Behavior Tree
-        behaviorTree = new Selector(new List<Node>
-        {
-            new Sequence(new List<Node>
+        behaviorTree = new Selector(
+            new List<Node>
             {
-                new CheckPlayerInRange(transform, playerTransform, meleeRange),
-                new EngageMeleeTask(this)
-            }),
-            new Sequence(new List<Node>
-            {
-                new CheckPlayerInRange(transform, playerTransform, lineOfSite),
-                new ChasePlayerTask(this)
-            }),
-            new PatrolSkeleton(this)
-        });
+                new Sequence(
+                    new List<Node>
+                    {
+                        new CheckPlayerInRange(transform, playerTransform, meleeRange),
+                        new EngageMeleeTask(this),
+                    }
+                ),
+                new Sequence(
+                    new List<Node>
+                    {
+                        new CheckPlayerInRange(transform, playerTransform, lineOfSite),
+                        new ChasePlayerTask(this),
+                    }
+                ),
+                new PatrolSkeleton(this),
+            }
+        );
     }
 
     void FixedUpdate()
@@ -73,6 +81,7 @@ public class SkeletonBT : MonoBehaviour
             Destroy(gameObject, 1f);
         }
     }
+
     void OnCollisionStay2D(Collision2D collision)
     {
         if (health <= 0)

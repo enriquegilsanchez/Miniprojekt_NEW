@@ -6,7 +6,7 @@ public class BossRanged : Node
 {
     private BossBT enemy;
     private int numberOfBeams = 8; // Number of beams to spawn
-    private float radius = 10f;    // Radius around the player's last position
+    private float radius = 10f; // Radius around the player's last position
     private float beamDelay = 0.2f; // Delay between each beam
 
     public BossRanged(BossBT enemy)
@@ -52,13 +52,20 @@ public class BossRanged : Node
             float randomDistance = Random.Range(0f, radius); // Random distance within the radius
 
             // Calculate beam position
-            Vector3 beamPosition = playerLastPosition + new Vector3(
-                Mathf.Cos(randomAngle) * randomDistance,
-                Mathf.Sin(randomAngle) * randomDistance,
-                0);
+            Vector3 beamPosition =
+                playerLastPosition
+                + new Vector3(
+                    Mathf.Cos(randomAngle) * randomDistance,
+                    Mathf.Sin(randomAngle) * randomDistance,
+                    0
+                );
 
             // Spawn the beam
-            GameObject beam = Object.Instantiate(enemy.beamPrefab, beamPosition, Quaternion.identity);
+            GameObject beam = Object.Instantiate(
+                enemy.beamPrefab,
+                beamPosition,
+                Quaternion.identity
+            );
 
             // Ensure the beam remains vertical
             beam.transform.rotation = Quaternion.identity; // Reset rotation to default (vertical)

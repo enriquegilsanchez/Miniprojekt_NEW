@@ -31,7 +31,10 @@ public class EngageMeleeTask : Node
         {
             enemy.time = 0f;
 
-            Collider2D[] players = Physics2D.OverlapCircleAll(enemy.transform.position, enemy.meleeRange);
+            Collider2D[] players = Physics2D.OverlapCircleAll(
+                enemy.transform.position,
+                enemy.meleeRange
+            );
             foreach (var player in players)
             {
                 if (player.CompareTag("Player"))

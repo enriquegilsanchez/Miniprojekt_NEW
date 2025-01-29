@@ -99,8 +99,6 @@ public class RoomGenerator : MonoBehaviour
         string type = "";
         int arrx = 0;
         int arry = 0;
-        // Debug.Log("xMax = " + xMax + "yMax = " + yMax);
-
         for (var i = yMax - 1; i >= yMin; i--)
         {
             for (var j = xMin; j < xMax; j++)
@@ -109,8 +107,6 @@ public class RoomGenerator : MonoBehaviour
                 position[1] = i;
                 type = DetermineTileType(j, i, xMin, xMax, yMin, yMax);
                 tiles[arrx, arry] = new DungeonTile(position, type);
-                // Debug.Log("x = " + j + " y = " + i + " arr vars = { " + arrx + " " + arry + " }");
-                // Debug.Log(tiles[arrx, arry].ToString());
                 arrx++;
             }
             arry++;

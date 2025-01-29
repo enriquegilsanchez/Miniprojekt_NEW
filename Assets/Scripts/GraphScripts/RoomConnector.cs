@@ -81,27 +81,17 @@ public class RoomConnector : MonoBehaviour
 
     public void ConnectLayerThree()
     {
-        // Debug.Log("loop start, rooms count = " + rooms.Count + "\n");
         for (int i = 0; i < rooms.Count; i++)
         {
             if (rooms[i].layer != 3)
                 continue;
 
-            // Debug.Log("outer loop, i = " + i + "\n");
             for (int j = i + 1; j < rooms.Count; j++)
             {
-                // Skips every Layer except for layer 4
+                // Skips every Layer except for layer 3
                 if (rooms[j].layer != 3)
                     continue;
-                // Debug.Log("inner loop, j = " + j + "\n");
-                // Debug.Log(
-                //     "Room Nr: "
-                //         + rooms[i].roomNumber
-                //         + "sequence [3] = "
-                //         + rooms[i].sequence[3]
-                //         + "\n"
-                // );
-                // Skips diagonal connections
+                // Skip diagonal connections
                 if (
                     (rooms[i].sequence[2] == '1' && rooms[j].sequence[2] == '3')
                     || (rooms[i].sequence[2] == '2' && rooms[j].sequence[2] == '4')
@@ -111,6 +101,7 @@ public class RoomConnector : MonoBehaviour
                 {
                     continue;
                 }
+                // Connect Rooms
                 if (rooms[i].motherNode == rooms[j].motherNode && rooms[i] != rooms[j])
                 {
                     rooms[i].connectedTo.Add(rooms[j]);
@@ -128,10 +119,11 @@ public class RoomConnector : MonoBehaviour
         for (int i = 0; i < rooms.Count; i++)
         {
             PlaceDoors(doorPrefab, rooms[i]);
-            for (int j = i - 1; j < rooms.Count; j++)
+            for (int j = 0; j < rooms.Count; j++)
             {
-                if (j < 0 || j == i)
+                if (j == i)
                     continue;
+                #region debug logging
                 Debug.Log(
                     "Currently comparing room "
                         + (i + 1)
@@ -147,6 +139,7 @@ public class RoomConnector : MonoBehaviour
                         + " sequence: "
                         + rooms[j].sequence
                 );
+                #endregion
                 //skip diagonal connections
                 if (
                     rooms[i].layer == 3
@@ -161,11 +154,10 @@ public class RoomConnector : MonoBehaviour
                     )
                 )
                 {
-                    Debug.Log("Skipped connection for room = " + (i + 1) + "and " + (j + 1));
                     continue;
                 }
 
-                // 1.   Depth 3: Connect Quadrants with each other, hier werden 2 und 1 schraeg verbuinden
+                // 1.   Depth 3: Connect Quadrants with each other
                 if (
                     rooms[i].layer == 3
                     && rooms[j].layer == 3
@@ -180,7 +172,6 @@ public class RoomConnector : MonoBehaviour
                         && rooms[i].sequence.Substring(1) == reversedSequence
                     )
                     {
-                        Debug.Log("Connected  room" + (i + 1) + " and " + (j + 1) + " in step 1");
                         rooms[i].connectedTo.Add(rooms[j]);
                         rooms[j].connectedTo.Add(rooms[i]);
                     }
@@ -194,7 +185,6 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 2");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                     // continue; // Should speed up

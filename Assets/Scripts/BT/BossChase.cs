@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossChase : Node
 {
-     private BossBT enemy;
+    private BossBT enemy;
     private Transform enemyTransform;
     private Transform playerTransform;
 
@@ -19,17 +19,21 @@ public class BossChase : Node
     {
         float distance = Vector2.Distance(enemyTransform.position, playerTransform.position);
 
-        if (enemy.health <= 0 /* || distance <= 3 */)
+        if (
+            enemy.health <= 0 /* || distance <= 3 */
+        )
         {
             return NodeState.Failure;
         }
-        if(distance<=7)
+        if (distance <= 7)
         {
             return NodeState.Success;
         }
 
         // Calculate direction to the player
-        Vector2 directionToPlayer = ((Vector2)playerTransform.position - (Vector2)enemyTransform.position).normalized;
+        Vector2 directionToPlayer = (
+            (Vector2)playerTransform.position - (Vector2)enemyTransform.position
+        ).normalized;
         enemy.rb.velocity = directionToPlayer * enemy.speed;
 
         // Flip sprite based on direction

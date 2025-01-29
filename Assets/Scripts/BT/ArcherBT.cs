@@ -34,21 +34,25 @@ public class ArcherBT : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.FindGameObjectWithTag("Player");
-        GameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
+        GameControl = GameObject
+            .FindGameObjectWithTag("GameController")
+            .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
         animator.SetFloat("hp", health);
 
-        behaviorTree = new Selector(new List<Node>
-        {
-            new WakeUpTask(this),
-            new ArcherAttack(this),
-            /* new Sequence(new List<Node>
+        behaviorTree = new Selector(
+            new List<Node>
             {
+                new WakeUpTask(this),
                 new ArcherAttack(this),
-                new PatrolTask(this)
-            }), */
-            new PatrolTask(this)
-        });
+                /* new Sequence(new List<Node>
+                {
+                    new ArcherAttack(this),
+                    new PatrolTask(this)
+                }), */
+                new PatrolTask(this),
+            }
+        );
     }
 
     void FixedUpdate()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PatrolSkeleton : Node
 {
     private SkeletonBT enemy;
+
     public PatrolSkeleton(SkeletonBT enemy)
     {
         this.enemy = enemy;
@@ -16,11 +17,16 @@ public class PatrolSkeleton : Node
         {
             return NodeState.Failure;
         }
-        Vector2 direction = ((Vector2)enemy.targetPoint - (Vector2)enemy.transform.position).normalized;
+        Vector2 direction = (
+            (Vector2)enemy.targetPoint - (Vector2)enemy.transform.position
+        ).normalized;
         enemy.rb.velocity = direction * enemy.speed;
         if (Vector2.Distance(enemy.transform.position, enemy.targetPoint) < 0.1f)
         {
-            enemy.targetPoint = (enemy.targetPoint == enemy.pointA.position) ? enemy.pointB.position : enemy.pointA.position;
+            enemy.targetPoint =
+                (enemy.targetPoint == enemy.pointA.position)
+                    ? enemy.pointB.position
+                    : enemy.pointA.position;
         }
 
         enemy.spriteRenderer.flipX = direction.x <= 0;

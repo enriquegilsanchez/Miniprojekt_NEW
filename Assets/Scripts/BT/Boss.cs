@@ -22,7 +22,8 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (health <= 0) return; // Gegner ist tot, nichts mehr machen
+        if (health <= 0)
+            return; // Gegner ist tot, nichts mehr machen
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
@@ -71,7 +72,11 @@ public class EnemyAI : MonoBehaviour
     void MoveTowards(Vector3 target)
     {
         Vector3 direction = (target - transform.position).normalized;
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(
+            transform.position,
+            target,
+            speed * Time.deltaTime
+        );
 
         if (direction.x > 0 && !facingRight)
         {
@@ -104,7 +109,9 @@ public class EnemyAI : MonoBehaviour
     void Die()
     {
         /* animator.SetTrigger("Death"); */
-        Destroy(gameObject/* , 2f */); // Gegner wird nach 2 Sekunden entfernt
+        Destroy(
+            gameObject /* , 2f */
+        ); // Gegner wird nach 2 Sekunden entfernt
     }
 
     void DamagePlayer()

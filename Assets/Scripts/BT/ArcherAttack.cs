@@ -13,7 +13,10 @@ public class ArcherAttack : Node
 
     public override NodeState Evaluate()
     {
-        float distanceToPlayer = Vector3.Distance(archer.Player.transform.position, archer.transform.position);
+        float distanceToPlayer = Vector3.Distance(
+            archer.Player.transform.position,
+            archer.transform.position
+        );
 
         if (distanceToPlayer <= archer.detectionRange)
         {

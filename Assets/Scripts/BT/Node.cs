@@ -9,7 +9,7 @@ public enum NodeState
 {
     Success,
     Failure,
-    Running
+    Running,
 }
 
 public class Selector : Node
@@ -57,4 +57,3 @@ public class Sequence : Node
         return NodeState.Success;
     }
 }
-

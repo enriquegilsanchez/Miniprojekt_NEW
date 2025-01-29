@@ -1584,6 +1584,7 @@ MonoBehaviour:
   gameover: 0
   music: {fileID: 2142913636}
   gameoverMusic: {fileID: 814679364}
+  connectedDoors: 00000000
   enemyPrefab: {fileID: 1544139902125019112, guid: 4f4ff7ec0cf94aa46b59036167cb7620, type: 3}
   archerPrefab: {fileID: 3158956508551886123, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
   bossPrefab: {fileID: 3569256027862732494, guid: 39324e8c9c108e94a959b75d517792d4, type: 3}
@@ -3602,9 +3603,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 5
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 5
+  m_Value: 20
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

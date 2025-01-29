@@ -32,7 +32,10 @@ public class BossMelee : Node
         enemy.animator.SetBool("isAttacking", true);
 
         // Perform melee attack
-        Collider2D[] players = Physics2D.OverlapCircleAll(enemy.transform.position, enemy.meleeRange);
+        Collider2D[] players = Physics2D.OverlapCircleAll(
+            enemy.transform.position,
+            enemy.meleeRange
+        );
         foreach (var player in players)
         {
             if (player.CompareTag("Player"))

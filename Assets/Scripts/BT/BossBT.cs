@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossBT : MonoBehaviour
 {
-   public Animator animator;
+    public Animator animator;
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D rb;
 
@@ -36,34 +36,45 @@ public class BossBT : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        gameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
+        gameControl = GameObject
+            .FindGameObjectWithTag("GameController")
+            .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
 
         // Start patrol point
         targetPoint = pointA.position;
 
         // Construct Behavior Tree
-        behaviorTree = new Selector(new List<Node>
-        {
-            new Sequence(new List<Node>
+        behaviorTree = new Selector(
+            new List<Node>
             {
-                new CheckPlayerInRange(transform, playerTransform, meleeRange),
-                new BossMelee(this)
-            }),
-            new Sequence(new List<Node>
-            {
-                new BossCheckHealth(this, 0.5f), // Check if health is below 50%
-                new CheckPlayerInRange(transform, playerTransform, RangedRange),
-                new BossRanged(this) // Perform the ranged attack
-            }),
-            new Sequence(new List<Node>
-            {
-                new CheckPlayerInRange(transform, playerTransform, lineOfSite),
-                new BossChase(this, this.transform, playerTransform)
-            }),
-            new BossPatrol(this, this.transform, playerTransform)
-        });
+                new Sequence(
+                    new List<Node>
+                    {
+                        new CheckPlayerInRange(transform, playerTransform, meleeRange),
+                        new BossMelee(this),
+                    }
+                ),
+                new Sequence(
+                    new List<Node>
+                    {
+                        new BossCheckHealth(this, 0.5f), // Check if health is below 50%
+                        new CheckPlayerInRange(transform, playerTransform, RangedRange),
+                        new BossRanged(this), // Perform the ranged attack
+                    }
+                ),
+                new Sequence(
+                    new List<Node>
+                    {
+                        new CheckPlayerInRange(transform, playerTransform, lineOfSite),
+                        new BossChase(this, this.transform, playerTransform),
+                    }
+                ),
+                new BossPatrol(this, this.transform, playerTransform),
+            }
+        );
     }
+
     private void Update()
     {
         // Reduce cooldown over time
@@ -81,7 +92,6 @@ public class BossBT : MonoBehaviour
     {
         behaviorTree.Evaluate();
     }
-    
 
     public void ChangeHp(int val)
     {
@@ -97,6 +107,7 @@ public class BossBT : MonoBehaviour
             /* Destroy(gameObject, 1f); */
         }
     }
+
     /* void OnCollisionStay2D(Collision2D collision)
     {
         if (health <= 0)
@@ -130,8 +141,11 @@ public class BossBT : MonoBehaviour
     void Die()
     {
         /* animator.SetTrigger("Death"); */
-        Destroy(gameObject/* , 2f */); // Gegner wird nach 2 Sekunden entfernt
+        Destroy(
+            gameObject /* , 2f */
+        ); // Gegner wird nach 2 Sekunden entfernt
     }
+
     public void FlipSprite(float directionX)
     {
         if (directionX != 0)
@@ -139,6 +153,7 @@ public class BossBT : MonoBehaviour
             spriteRenderer.flipX = directionX > 0;
         }
     }
+
     public void ApplyMeleeDamage()
     {
         Collider2D[] players = Physics2D.OverlapCircleAll(transform.position, meleeRange);
@@ -151,8 +166,11 @@ public class BossBT : MonoBehaviour
             }
         }
     }
+
     public void Destroy()
     {
-        Destroy(gameObject/* , 2f */); // Gegner wird nach 2 Sekunden entfernt
+        Destroy(
+            gameObject /* , 2f */
+        ); // Gegner wird nach 2 Sekunden entfernt
     }
 }

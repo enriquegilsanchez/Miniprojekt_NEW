@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WakeUpTask : Node
 {
-   private ArcherBT archer;
+    private ArcherBT archer;
 
     public WakeUpTask(ArcherBT archer)
     {
@@ -13,7 +13,10 @@ public class WakeUpTask : Node
 
     public override NodeState Evaluate()
     {
-        float distanceToPlayer = Vector3.Distance(archer.Player.transform.position, archer.transform.position);
+        float distanceToPlayer = Vector3.Distance(
+            archer.Player.transform.position,
+            archer.transform.position
+        );
 
         if (!archer.isAwake && distanceToPlayer <= archer.wakeUpRange)
         {

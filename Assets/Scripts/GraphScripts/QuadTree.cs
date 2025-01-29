@@ -22,6 +22,15 @@ public class QuadTree
         depth = givenDepth;
     }
 
+    /// <summary>
+    /// Generates a Quadtree
+    /// </summary>
+    /// <param name="minSize">minimum size for each leaf node</param>
+    /// <param name="maxSize">maximum size for each leaf bode</param>
+    /// <param name="container">Container of current node</param>
+    /// <param name="givenDepth">current depth of the Quadtree</param>
+    /// <param name="givenQuadrant">current quadrant of the Quadtree</param>
+    /// <returns>Root node of the Quadtree</returns>
     internal static QuadTree SplitTree(
         int minSize,
         int maxSize,
@@ -30,14 +39,16 @@ public class QuadTree
         int givenQuadrant = 0
     )
     {
+        // Generate a new node at current position with 4 Containers
         var currentNode = new QuadTree(container, givenDepth, givenQuadrant);
         var newContainers = SplitContainer(container);
 
+        // Stop splitting if container would be smaller than minSize after next split
         if (container.width <= 2 * minSize || container.height <= 2 * minSize)
         {
             return currentNode;
         }
-
+        // Assure at least one split is done
         if (givenDepth == 0)
         {
             currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], givenDepth + 1, 1);
@@ -48,8 +59,9 @@ public class QuadTree
         }
         else
         {
+            // Each quadrant has a 50% chance to be split again to ensure randomness
             var splitProbability = Random.Range(0, 100) > 50 ? true : false;
-            // Debug.Log("splitProb: " + splitProbability);
+            // Only split up to a depth of 3
             if (splitProbability && givenDepth < 3)
             {
                 currentNode.q1 = SplitTree(minSize, maxSize, newContainers[0], givenDepth + 1, 1);
@@ -62,6 +74,11 @@ public class QuadTree
         }
     }
 
+    /// <summary>
+    /// Splits a given container in four quadrants
+    /// </summary>
+    /// <param name="givenContainer">Container to be split</param>
+    /// <returns>An Array of four rects</returns>
     public static Rect[] SplitContainer(Rect givenContainer)
     {
         Rect c1,
@@ -125,9 +142,15 @@ public class QuadTree
         return new Rect(x, y, width, height);
     }
 
-    /// Generates and places rooms in all leaf nodes of the QuadTree
+    /// <summary>
+    ///  Generates and places rooms in all leaf nodes of the QuadTree
+    /// </summary>
+    /// <param name="tree">Quadtree node to place rooms in</param>
+    /// <param name="minSize">Minimum Size of a room</param>
+    /// <param name="maxSize">Maximum Size of a room</param>
     public static void PlaceRooms(QuadTree tree, int minSize, int maxSize)
     {
+        // Return after leaf node was reached
         if (tree == null)
         {
             return;
@@ -138,6 +161,7 @@ public class QuadTree
         PlaceRooms(tree.q3, minSize, maxSize);
         PlaceRooms(tree.q4, minSize, maxSize);
 
+        // Generate a room of random size in leaf nodes
         if (IsLeaf(tree))
         {
             tree.room = GenerateRoom(tree.container, minSize, maxSize);

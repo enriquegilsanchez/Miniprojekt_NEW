@@ -15,6 +15,8 @@ public class BossCheckHealth : Node
 
     public override NodeState Evaluate()
     {
-        return enemy.health <= enemy.maxHealth * healthThreshold ? NodeState.Success : NodeState.Failure;
+        return enemy.health <= enemy.maxHealth * healthThreshold
+            ? NodeState.Success
+            : NodeState.Failure;
     }
 }
