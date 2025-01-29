@@ -155,4 +155,26 @@ public class BossBT : MonoBehaviour
     {
         Destroy(gameObject/* , 2f */); // Gegner wird nach 2 Sekunden entfernt
     }
+    private void OnDrawGizmosSelected()
+{
+    // Melee Range (Red)
+    Gizmos.color = Color.red;
+    Gizmos.DrawWireSphere(transform.position, meleeRange);
+
+    // Ranged Attack Range (Yellow)
+    Gizmos.color = Color.yellow;
+    Gizmos.DrawWireSphere(transform.position, RangedRange);
+
+    // Line of Sight (Green)
+    Gizmos.color = Color.green;
+    Gizmos.DrawWireSphere(transform.position, lineOfSite);
+
+    // Patrol Points (Blue Line)
+    if (pointA != null && pointB != null)
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(pointA.position, pointB.position);
+    }
+}
+
 }

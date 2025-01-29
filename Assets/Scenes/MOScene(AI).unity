@@ -164,7 +164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6011890092048876291, guid: 4f4ff7ec0cf94aa46b59036167cb7620, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.5154
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 6011890092048876291, guid: 4f4ff7ec0cf94aa46b59036167cb7620, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1348,11 +1348,11 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   beamPrefab: {fileID: 8959587454236155813, guid: c8ce227cb2cb09b40a8d71df3d7b4e5b, type: 3}
   pointA: {fileID: 1919150250}
-  pointB: {fileID: 93266598}
-  speed: 6
-  lineOfSite: 15
+  pointB: {fileID: 1919150250}
+  speed: 6.18
+  lineOfSite: 14
   meleeRange: 5
-  RangedRange: 15
+  RangedRange: 10
   targetPoint: {x: 0, y: 0, z: 0}
   health: 50
   maxHealth: 50
@@ -2965,8 +2965,8 @@ MonoBehaviour:
   weapon: {fileID: 1112909421}
   shotTimer: 0
   shootingCooldown: 1
-  detectionRange: 12
-  wakeUpRange: 20
+  detectionRange: 7.8
+  wakeUpRange: 17
   health: 5
   isAwake: 0
   pointA: {fileID: 1919150250}
@@ -2994,7 +2994,7 @@ MonoBehaviour:
   speed: 3
   shootingCooldown: 0
   detectionRange: 14
-  wakeUpRange: 20
+  wakeUpRange: 19.3
   health: 4
   isAwake: 0
   shotTimer: 0
@@ -98426,19 +98426,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4380799272896463577, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5.5244236
+      value: 3.416241
       objectReference: {fileID: 0}
     - target: {fileID: 4380799272896463577, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5.458167
+      value: 3.593001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380799272896463577, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.3165596
       objectReference: {fileID: 0}
     - target: {fileID: 4380799272896463577, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.9
+      value: -0.36
       objectReference: {fileID: 0}
     - target: {fileID: 4380799272896463577, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.4
+      value: 4.39
       objectReference: {fileID: 0}
     - target: {fileID: 4380799272896463577, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -99967,9 +99971,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 5
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 5
+  m_Value: 20
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -114270,6 +114274,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2749532015596095069, guid: e2bb8f6d48718df42a0682d4a4a14a35, type: 3}
     - target: {fileID: 2365713027626005003, guid: 769a77656504a794aad579880be44cb0, type: 3}
+      propertyPath: health
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2365713027626005003, guid: 769a77656504a794aad579880be44cb0, type: 3}
       propertyPath: DashBar
       value: 
       objectReference: {fileID: 1950325189}
@@ -114446,11 +114454,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 933848346595828382, guid: 39324e8c9c108e94a959b75d517792d4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.6
+      value: 1.53
       objectReference: {fileID: 0}
     - target: {fileID: 933848346595828382, guid: 39324e8c9c108e94a959b75d517792d4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.4961
+      value: 0.88
       objectReference: {fileID: 0}
     - target: {fileID: 933848346595828382, guid: 39324e8c9c108e94a959b75d517792d4, type: 3}
       propertyPath: m_LocalPosition.z
