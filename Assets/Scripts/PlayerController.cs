@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 10f;
-    public float maxHealth = 5;
-    public float health = 5;
+    public float maxHealth = 20;
+    public float health = 20;
     public Rigidbody2D rb;
     public Animator animator;
     public Weapon weapon;

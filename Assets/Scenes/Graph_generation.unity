@@ -713,6 +713,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2749532015596095069, guid: e2bb8f6d48718df42a0682d4a4a14a35, type: 3}
     - target: {fileID: 2365713027626005003, guid: 769a77656504a794aad579880be44cb0, type: 3}
+      propertyPath: health
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2365713027626005003, guid: 769a77656504a794aad579880be44cb0, type: 3}
       propertyPath: DashBar
       value: 
       objectReference: {fileID: 2119886165}
@@ -720,6 +724,10 @@ PrefabInstance:
       propertyPath: control
       value: 
       objectReference: {fileID: 762093384}
+    - target: {fileID: 2365713027626005003, guid: 769a77656504a794aad579880be44cb0, type: 3}
+      propertyPath: maxHealth
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6338281566404438549, guid: 769a77656504a794aad579880be44cb0, type: 3}
       propertyPath: m_Name
       value: Player
