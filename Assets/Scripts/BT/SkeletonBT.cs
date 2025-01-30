@@ -9,14 +9,15 @@ public class SkeletonBT : MonoBehaviour
     public Rigidbody2D rb;
 
     public Transform playerTransform;
-    public Transform pointA;
-    public Transform pointB;
+
+    public Vector2 pointA;
+    public Vector2 pointB;
 
     public float speed;
     public float lineOfSite;
     public float meleeRange;
 
-    public Vector3 targetPoint;
+    public Vector2 targetPoint;
 
     public int health = 100;
     public float iFrame = 1f;
@@ -36,9 +37,17 @@ public class SkeletonBT : MonoBehaviour
             .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
         animator.SetFloat("hp", health);
+        // Set random points to patrol
+        var currentRect = gameControl.GetComponent<GameControl>().currentRoom.rect;
+        var randomX = Random.Range(currentRect.xMin + 3, currentRect.xMax - 3);
+        var randomY = Random.Range(currentRect.yMin + 3, currentRect.yMax - 3);
+        pointA = new Vector2(randomX, randomY);
+        randomX = Random.Range(currentRect.xMin + 3, currentRect.xMax - 3);
+        randomY = Random.Range(currentRect.yMin + 3, currentRect.yMax - 3);
+        pointA = new Vector2(randomX, randomY);
 
         // Start patrol point
-        targetPoint = pointA.position;
+        targetPoint = pointA;
 
         // Construct Behavior Tree
         behaviorTree = new Selector(

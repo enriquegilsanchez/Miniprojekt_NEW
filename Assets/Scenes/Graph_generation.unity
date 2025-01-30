@@ -1593,8 +1593,8 @@ MonoBehaviour:
   music: {fileID: 2142913636}
   gameoverMusic: {fileID: 814679364}
   connectedDoors: 00000000
-  enemyPrefab: {fileID: 1544139902125019112, guid: 4f4ff7ec0cf94aa46b59036167cb7620, type: 3}
-  archerPrefab: {fileID: 3158956508551886123, guid: b1dcf4ac09e05c648b60b688c47ef34d, type: 3}
+  enemyPrefab: {fileID: 3594145451461492196, guid: 4d42eac3f1b67244c9d42bca058815b4, type: 3}
+  archerPrefab: {fileID: 3908009796374691397, guid: 2c51edd77976e9743b41d8710b355ca5, type: 3}
   bossPrefab: {fileID: 3569256027862732494, guid: 39324e8c9c108e94a959b75d517792d4, type: 3}
 --- !u!4 &762093386
 Transform:

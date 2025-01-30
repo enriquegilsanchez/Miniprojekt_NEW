@@ -5,14 +5,14 @@ using UnityEngine;
 public class ArcherBT : MonoBehaviour
 {
     public GameObject Player;
-    public Component GameControl;
+    public Component gameControl;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D rb;
     public EnemyWeapon weapon;
 
-    public Transform pointA;
-    public Transform pointB;
+    public Vector2 pointA;
+    public Vector2 pointB;
 
     public float speed = 3f;
     public float shootingCooldown = 1f;
@@ -25,7 +25,7 @@ public class ArcherBT : MonoBehaviour
     public bool isAwake = false;
 
     public float shotTimer = 0f;
-    public Vector3 targetPoint;
+    public Vector2 targetPoint;
 
     private Node behaviorTree;
     public bool isDead;
@@ -34,11 +34,19 @@ public class ArcherBT : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         Player = GameObject.FindGameObjectWithTag("Player");
-        GameControl = GameObject
+        gameControl = GameObject
             .FindGameObjectWithTag("GameController")
             .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
         animator.SetFloat("hp", health);
+        // Set random points to patrol
+        var currentRect = gameControl.GetComponent<GameControl>().currentRoom.rect;
+        var randomX = Random.Range(currentRect.xMin + 3, currentRect.xMax - 3);
+        var randomY = Random.Range(currentRect.yMin + 3, currentRect.yMax - 3);
+        pointA = new Vector2(randomX, randomY);
+        randomX = Random.Range(currentRect.xMin + 3, currentRect.xMax - 3);
+        randomY = Random.Range(currentRect.yMin + 3, currentRect.yMax - 3);
+        pointA = new Vector2(randomX, randomY);
 
         behaviorTree = new Selector(
             new List<Node>
@@ -84,7 +92,7 @@ public class ArcherBT : MonoBehaviour
         rb.velocity = Vector2.zero;
         animator.SetTrigger("die");
         Destroy(GetComponent<BoxCollider2D>());
-        GameControl.SendMessage("ChangeScore", 1);
+        gameControl.SendMessage("ChangeScore", 1);
         Destroy(gameObject, 1f);
     }
 }
