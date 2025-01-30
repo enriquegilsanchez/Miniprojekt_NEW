@@ -10,15 +10,15 @@ public class BossBT : MonoBehaviour
 
     public Transform playerTransform;
     public GameObject beamPrefab;
-    public Transform pointA;
-    public Transform pointB;
+    public Vector2 pointA;
+    public Vector2 pointB;
 
     public float speed;
     public float lineOfSite;
     public float meleeRange;
     public float RangedRange;
 
-    public Vector3 targetPoint;
+    public Vector2 targetPoint;
 
     public int health = 100;
     public int maxHealth = 100;
@@ -40,9 +40,12 @@ public class BossBT : MonoBehaviour
             .FindGameObjectWithTag("GameController")
             .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
+        var currentRect = gameControl.GetComponent<GameControl>().currentRoom.rect;
+        pointA = new Vector2(currentRect.xMin + 3, currentRect.center.y);
+        pointA = new Vector2(currentRect.xMax - 3, currentRect.center.y);
 
         // Start patrol point
-        targetPoint = pointA.position;
+        targetPoint = pointA;
 
         // Construct Behavior Tree
         behaviorTree = new Selector(

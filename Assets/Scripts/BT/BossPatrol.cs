@@ -36,10 +36,7 @@ public class BossPatrol : Node
         // Check if the enemy reached the target point
         if (Vector2.Distance(enemyTransform.position, enemy.targetPoint) < 0.1f)
         {
-            enemy.targetPoint =
-                (enemy.targetPoint == enemy.pointA.position)
-                    ? enemy.pointB.position
-                    : enemy.pointA.position;
+            enemy.targetPoint = (enemy.targetPoint == enemy.pointA) ? enemy.pointB : enemy.pointA;
         }
 
         // Flip sprite based on direction
