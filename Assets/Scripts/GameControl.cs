@@ -203,6 +203,12 @@ public class GameControl : MonoBehaviour
         if (currentRoom.lowerDoor.activeSelf)
             connectedDoors[3] = true;
 
+        Debug.Log(
+            "For the room "
+                + currentRoom.roomNumber
+                + " the active doors were: "
+                + connectedDoors.ToString()
+        );
         // deactivate all doors
         currentRoom.leftDoor.SetActive(false);
         currentRoom.rightDoor.SetActive(false);

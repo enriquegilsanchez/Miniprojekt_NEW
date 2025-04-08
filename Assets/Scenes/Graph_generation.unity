@@ -1399,7 +1399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711746d4dc95cde42a8673d990cecb64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugDraw: 1
+  DebugDraw: 0
+  drawnRoomNumbers: 0
   quadSize: 400
   quadPos: 4c0400002c010000
   minSize: 15

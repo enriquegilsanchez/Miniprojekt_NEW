@@ -74,7 +74,7 @@ public class ArcherBT : MonoBehaviour
     public void WakeUp()
     {
         isAwake = true;
-        animator.SetTrigger("wakeUp");
+        // animator.SetTrigger("wakeUp");
     }
 
     public void ChangeHp(int val)
@@ -90,7 +90,7 @@ public class ArcherBT : MonoBehaviour
     void Die()
     {
         rb.velocity = Vector2.zero;
-        animator.SetTrigger("die");
+        // animator.SetTrigger("die");
         Destroy(GetComponent<BoxCollider2D>());
         gameControl.SendMessage("ChangeScore", 1);
         Destroy(gameObject, 1f);

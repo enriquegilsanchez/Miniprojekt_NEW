@@ -7,8 +7,11 @@ using UnityEngine.Tilemaps;
 
 public class QuadTreeGenerator : MonoBehaviour
 {
-    public bool DebugDraw;
+    [SerializeField]
+    bool DebugDraw;
 
+    [SerializeField]
+    bool drawnRoomNumbers = false;
     public QuadTree tree;
 
     [SerializeField]
@@ -40,7 +43,6 @@ public class QuadTreeGenerator : MonoBehaviour
     public Room spawnRoom;
     public Room bossRoom;
     public List<DungeonTile[,]> allTiles = new List<DungeonTile[,]>();
-    private bool drawnRoomNumbers = false;
 
     Component gameControl;
 
@@ -75,7 +77,7 @@ public class QuadTreeGenerator : MonoBehaviour
             DrawSizeIndicator();
             // DrawRooms(tree);
         }
-        if (!drawnRoomNumbers && roomList != null)
+        if (drawnRoomNumbers && roomList != null)
         {
             DrawRoomNumbers(roomList);
             DrawRoomConnectors(roomList);

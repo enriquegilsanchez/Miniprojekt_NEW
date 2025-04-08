@@ -22,7 +22,7 @@ public class ArcherAttack : Node
         {
             archer.rb.velocity = Vector2.zero;
             archer.animator.SetFloat("speed", 0);
-            archer.animator.SetBool("isShooting", true);
+            // archer.animator.SetBool("isShooting", true);
 
             if (archer.shotTimer >= archer.shootingCooldown)
             {
