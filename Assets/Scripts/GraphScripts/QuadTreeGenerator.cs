@@ -130,14 +130,14 @@ public class QuadTreeGenerator : MonoBehaviour
 
         if (QuadTree.IsLeaf(tree))
         {
-            Debug.Log(
-                "----------------------------------------------------\n"
-                    + "QUAD Leaf size: width = "
-                    + tree.container.width
-                    + " height = "
-                    + tree.container.height
-                    + "\n----------------------------------------------------"
-            );
+            // Debug.Log(
+            //     "----------------------------------------------------\n"
+            //         + "QUAD Leaf size: width = "
+            //         + tree.container.width
+            //         + " height = "
+            //         + tree.container.height
+            //         + "\n----------------------------------------------------"
+            // );
             // Debug.Log("Leaf size: width = " + tree.container.width + " height = " + tree.container.height);
             // Debug.Log("\n----------------------------------------------------");
         }
@@ -200,7 +200,7 @@ public class QuadTreeGenerator : MonoBehaviour
         foreach (var room in rooms)
         {
             room.roomNumber = roomNumber;
-            Debug.Log(room.ToString());
+            // Debug.Log(room.ToString());
             roomNumber++;
         }
     }
@@ -255,13 +255,13 @@ public class QuadTreeGenerator : MonoBehaviour
         }
         spawnRoom = minRoom;
         bossRoom = maxRoom;
-        Debug.Log(
-            "spawn room is room nr: "
-                + spawnRoom.roomNumber
-                + "\n"
-                + "boss room is room nr: "
-                + bossRoom.roomNumber
-        );
+        // Debug.Log(
+        //     "spawn room is room nr: "
+        //         + spawnRoom.roomNumber
+        //         + "\n"
+        //         + "boss room is room nr: "
+        //         + bossRoom.roomNumber
+        // );
         spawnRoom.isCleared = true;
         gameControl.SendMessage("SetSpawnRoom", spawnRoom);
         gameControl.SendMessage("SetBossRoom", bossRoom);

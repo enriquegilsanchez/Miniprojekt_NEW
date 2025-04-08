@@ -198,7 +198,9 @@ public class EnemyFollowPlayer : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        gameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent("GameControl");
+        gameControl = GameObject
+            .FindGameObjectWithTag("GameController")
+            .GetComponent("GameControl");
         rb = GetComponent<Rigidbody2D>();
         animator.SetFloat("hp", health);
 
@@ -256,7 +258,9 @@ public class EnemyFollowPlayer : MonoBehaviour
     void ChasePlayerWithSeparation()
     {
         // Base direction towards the player
-        Vector2 directionToPlayer = ((Vector2)playerTransform.position - (Vector2)transform.position).normalized;
+        Vector2 directionToPlayer = (
+            (Vector2)playerTransform.position - (Vector2)transform.position
+        ).normalized;
 
         // Apply separation force
         Vector2 separation = CalculateSeparation();
@@ -290,7 +294,11 @@ public class EnemyFollowPlayer : MonoBehaviour
     Vector2 CalculateSeparation()
     {
         // Find nearby enemies
-        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, separationRadius, enemyLayer);
+        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(
+            transform.position,
+            separationRadius,
+            enemyLayer
+        );
         Vector2 separationForce = Vector2.zero;
 
         foreach (Collider2D enemy in nearbyEnemies)

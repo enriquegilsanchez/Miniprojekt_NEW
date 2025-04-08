@@ -53,8 +53,8 @@ public class GameControl : MonoBehaviour
         PlayerHealth = 20;
         HealthBar.maxValue = PlayerHealth;
         HealthBar.value = PlayerHealth;
-        Debug.Log("playerHealth:" + PlayerHealth);
-        Debug.Log("healthbarvalue:" + HealthBar.value);
+        // Debug.Log("playerHealth:" + PlayerHealth);
+        // Debug.Log("healthbarvalue:" + HealthBar.value);
         Menu.SetActive(false);
         music.SetActive(true);
         gameover = false;
@@ -112,7 +112,7 @@ public class GameControl : MonoBehaviour
 
     public void GetHp()
     {
-        Debug.Log("Hp: " + PlayerHealth);
+        // Debug.Log("Hp: " + PlayerHealth);
     }
 
     public void ChangeScore(int val)

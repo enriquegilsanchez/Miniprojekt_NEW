@@ -124,21 +124,21 @@ public class RoomConnector : MonoBehaviour
                 if (j == i)
                     continue;
                 #region debug logging
-                Debug.Log(
-                    "Currently comparing room "
-                        + (i + 1)
-                        + " and "
-                        + (j + 1)
-                        + "\n"
-                        + "room "
-                        + (i + 1)
-                        + " sequence: "
-                        + rooms[i].sequence
-                        + " room "
-                        + (j + 1)
-                        + " sequence: "
-                        + rooms[j].sequence
-                );
+                // Debug.Log(
+                //     "Currently comparing room "
+                //         + (i + 1)
+                //         + " and "
+                //         + (j + 1)
+                //         + "\n"
+                //         + "room "
+                //         + (i + 1)
+                //         + " sequence: "
+                //         + rooms[i].sequence
+                //         + " room "
+                //         + (j + 1)
+                //         + " sequence: "
+                //         + rooms[j].sequence
+                // );
                 #endregion
                 //skip diagonal connections
                 if (
@@ -197,7 +197,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 3");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 3");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -209,7 +209,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 4");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 4");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -221,7 +221,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 5");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 5");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -233,7 +233,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 6");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 6");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -248,7 +248,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 7");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 7");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -260,7 +260,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 8");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 8");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -272,7 +272,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 9");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 9");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -284,7 +284,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 10");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 10");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -298,7 +298,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 11");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 11");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -310,7 +310,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 12");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 12");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -322,7 +322,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 13");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 13");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -334,7 +334,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 14");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 14");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -348,7 +348,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 15");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 15");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -360,7 +360,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 16");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 16");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -372,7 +372,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 17");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 17");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -384,7 +384,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 18");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 18");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -398,7 +398,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 19");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 19");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -410,7 +410,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 20");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 20");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -422,7 +422,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 21");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 21");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -434,7 +434,7 @@ public class RoomConnector : MonoBehaviour
                     && !checkDisallowed(rooms[i].sequence, rooms[j].sequence)
                 )
                 {
-                    Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 22");
+                    // Debug.Log("Connected room " + (i + 1) + " and " + (j + 1) + " in step 22");
                     rooms[i].connectedTo.Add(rooms[j]);
                     rooms[j].connectedTo.Add(rooms[i]);
                 }
@@ -450,13 +450,13 @@ public class RoomConnector : MonoBehaviour
             disallowedConnections.TryGetValue(roomOneSequence, out output);
             if (output == roomTwoSequence)
             {
-                Debug.Log(
-                    "checkDisallowed for "
-                        + roomOneSequence
-                        + " and "
-                        + roomTwoSequence
-                        + " result: true"
-                );
+                // Debug.Log(
+                //     "checkDisallowed for "
+                //         + roomOneSequence
+                //         + " and "
+                //         + roomTwoSequence
+                //         + " result: true"
+                // );
                 return true;
             }
         }
@@ -465,19 +465,19 @@ public class RoomConnector : MonoBehaviour
             disallowedConnections.TryGetValue(roomTwoSequence, out output);
             if (output == roomOneSequence)
             {
-                Debug.Log(
-                    "checkDisallowed for "
-                        + roomOneSequence
-                        + " and "
-                        + roomTwoSequence
-                        + " result: true"
-                );
+                // Debug.Log(
+                //     "checkDisallowed for "
+                //         + roomOneSequence
+                //         + " and "
+                //         + roomTwoSequence
+                //         + " result: true"
+                // );
                 return true;
             }
         }
-        Debug.Log(
-            "checkDisallowed for " + roomOneSequence + " and " + roomTwoSequence + " result: false"
-        );
+        // Debug.Log(
+        //     "checkDisallowed for " + roomOneSequence + " and " + roomTwoSequence + " result: false"
+        // );
         return false;
     }
 
@@ -489,13 +489,13 @@ public class RoomConnector : MonoBehaviour
         {
             foreach (var connectedRoom in room.connectedTo)
             {
-                Debug.Log(
-                    "Room Nr: "
-                        + room.roomNumber
-                        + " is connected to Room Nr: "
-                        + connectedRoom.roomNumber
-                        + "\n"
-                );
+                // Debug.Log(
+                //     "Room Nr: "
+                //         + room.roomNumber
+                //         + " is connected to Room Nr: "
+                //         + connectedRoom.roomNumber
+                //         + "\n"
+                // );
             }
         }
     }
