@@ -1,4 +1,4 @@
-using UnityEditor.Experimental.GraphView;
+// using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class BspTree
@@ -15,7 +15,6 @@ public class BspTree
 
     internal static BspTree splitTree(int splitTimes, Rect container)
     {
-
         var currentNode = new BspTree(container);
 
         if (splitTimes == 0)
@@ -33,13 +32,12 @@ public class BspTree
         // Debug.Log("splitTimes after right: " + splitTimes);
 
         return currentNode;
-
     }
 
     public static Rect[] splitContainer(Rect givenContainer)
     {
-
-        Rect container1, container2;
+        Rect container1,
+            container2;
 
         var splitVertical = Random.value < 0.5f;
 
@@ -48,14 +46,34 @@ public class BspTree
         if (splitVertical)
         {
             var newWidth = (int)(givenContainer.width * Random.Range(0.4f, 0.6f));
-            container1 = new Rect(givenContainer.x, givenContainer.y, newWidth, givenContainer.height);
-            container2 = new Rect(givenContainer.x + container1.width, givenContainer.y, givenContainer.width - container1.width, givenContainer.height);
+            container1 = new Rect(
+                givenContainer.x,
+                givenContainer.y,
+                newWidth,
+                givenContainer.height
+            );
+            container2 = new Rect(
+                givenContainer.x + container1.width,
+                givenContainer.y,
+                givenContainer.width - container1.width,
+                givenContainer.height
+            );
         }
         else
         {
             var newHeight = (int)(givenContainer.height * Random.Range(0.4f, 0.6f));
-            container1 = new Rect(givenContainer.x, givenContainer.y, givenContainer.width, newHeight);
-            container2 = new Rect(givenContainer.x, givenContainer.y + container1.height, givenContainer.width, givenContainer.height - container1.height);
+            container1 = new Rect(
+                givenContainer.x,
+                givenContainer.y,
+                givenContainer.width,
+                newHeight
+            );
+            container2 = new Rect(
+                givenContainer.x,
+                givenContainer.y + container1.height,
+                givenContainer.width,
+                givenContainer.height - container1.height
+            );
         }
 
         // Debug Info
@@ -109,9 +127,9 @@ public class BspTree
 
     public static bool IsLeaf(BspTree tree)
     {
-        if (tree.leftChild != null || tree.rightChild != null) return false;
+        if (tree.leftChild != null || tree.rightChild != null)
+            return false;
 
         return true;
     }
-
 }

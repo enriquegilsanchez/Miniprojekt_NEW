@@ -6,14 +6,18 @@ using UnityEngine;
 
 public class BspGenerator : MonoBehaviour
 {
-
     public bool DebugDraw;
 
     public BspTree tree;
 
-    [SerializeField] int bspSize;
-    [SerializeField] int[] bspPos = { 0, 0 };
-    [SerializeField] int numberOfSplits;
+    [SerializeField]
+    int bspSize;
+
+    [SerializeField]
+    int[] bspPos = { 0, 0 };
+
+    [SerializeField]
+    int numberOfSplits;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +27,8 @@ public class BspGenerator : MonoBehaviour
         // PrintLeafSizes(tree);
         BspTree.placeRooms(tree);
     }
+
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if (DebugDraw && tree != null)
@@ -39,8 +45,10 @@ public class BspGenerator : MonoBehaviour
 
         Gizmos.DrawWireCube(tree.container.center, tree.container.size);
 
-        if (tree.leftChild != null) DrawBspTree(tree.leftChild);
-        if (tree.rightChild != null) DrawBspTree(tree.rightChild);
+        if (tree.leftChild != null)
+            DrawBspTree(tree.leftChild);
+        if (tree.rightChild != null)
+            DrawBspTree(tree.rightChild);
     }
 
     void DrawRooms(BspTree tree)
@@ -69,10 +77,14 @@ public class BspGenerator : MonoBehaviour
 
         if (BspTree.IsLeaf(tree))
         {
-            Debug.Log(
-            "----------------------------------------------------\n" +
-            "BSP Leaf size: width = " + tree.container.width + " height = " + tree.container.height +
-            "\n----------------------------------------------------");
+            // Debug.Log(
+            //     "----------------------------------------------------\n"
+            //         + "BSP Leaf size: width = "
+            //         + tree.container.width
+            //         + " height = "
+            //         + tree.container.height
+            //         + "\n----------------------------------------------------"
+            // );
             // Debug.Log("Leaf size: width = " + tree.container.width + " height = " + tree.container.height);
             // Debug.Log("\n----------------------------------------------------");
         }
@@ -80,15 +92,29 @@ public class BspGenerator : MonoBehaviour
 
     void DrawSizeIndicator()
     {
-        Debug.DrawLine(new UnityEngine.Vector2(bspPos[0], bspPos[1] - 10), new UnityEngine.Vector2(bspPos[0] + bspSize, bspPos[1] - 10));
-        Debug.DrawLine(new UnityEngine.Vector2(bspPos[0] - 10, bspPos[1]), new UnityEngine.Vector2(bspPos[0] - 10, bspPos[1] + bspSize));
+        Debug.DrawLine(
+            new UnityEngine.Vector2(bspPos[0], bspPos[1] - 10),
+            new UnityEngine.Vector2(bspPos[0] + bspSize, bspPos[1] - 10)
+        );
+        Debug.DrawLine(
+            new UnityEngine.Vector2(bspPos[0] - 10, bspPos[1]),
+            new UnityEngine.Vector2(bspPos[0] - 10, bspPos[1] + bspSize)
+        );
         Handles.BeginGUI();
         GUI.color = Color.white;
-        Handles.Label(new UnityEngine.Vector2(bspPos[0] + bspSize / 2 - 60, bspPos[1] + bspSize + 50), "Method: BspTree");
-        Handles.Label(new UnityEngine.Vector2(bspPos[0] + bspSize / 2 - 60, bspPos[1] - 30), "width: " + bspSize);
-        Handles.Label(new UnityEngine.Vector2(bspPos[0] - 150, bspPos[1] + bspSize / 2), "height: " + bspSize);
+        Handles.Label(
+            new UnityEngine.Vector2(bspPos[0] + bspSize / 2 - 60, bspPos[1] + bspSize + 50),
+            "Method: BspTree"
+        );
+        Handles.Label(
+            new UnityEngine.Vector2(bspPos[0] + bspSize / 2 - 60, bspPos[1] - 30),
+            "width: " + bspSize
+        );
+        Handles.Label(
+            new UnityEngine.Vector2(bspPos[0] - 150, bspPos[1] + bspSize / 2),
+            "height: " + bspSize
+        );
         Handles.EndGUI();
-
     }
+#endif
 }
-

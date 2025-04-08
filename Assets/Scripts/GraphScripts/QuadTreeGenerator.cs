@@ -69,6 +69,7 @@ public class QuadTreeGenerator : MonoBehaviour
         roomConnector.SetDoorDirections();
     }
 
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if (DebugDraw && tree != null)
@@ -170,6 +171,37 @@ public class QuadTreeGenerator : MonoBehaviour
         Handles.EndGUI();
     }
 
+    void DrawRoomNumbers(List<Room> rooms)
+    {
+        Handles.BeginGUI();
+        GUI.color = Color.white;
+        foreach (var room in rooms)
+        {
+            Handles.Label(
+                new UnityEngine.Vector2(room.rect.center.x - 3, room.rect.center.y + 3),
+                room.roomNumber.ToString()
+            );
+        }
+        Handles.EndGUI();
+    }
+
+    void DrawRoomConnectors(List<Room> rooms)
+    {
+        foreach (var room in rooms)
+        {
+            foreach (var connectedRoom in room.connectedTo)
+            {
+                if (room.layer == 3)
+                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.red);
+                if (room.layer == 2)
+                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.yellow);
+                if (room.layer == 1)
+                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.magenta);
+            }
+        }
+    }
+#endif
+
     void GenerateRoomGrids(QuadTree tree)
     {
         if (tree == null)
@@ -202,36 +234,6 @@ public class QuadTreeGenerator : MonoBehaviour
             room.roomNumber = roomNumber;
             // Debug.Log(room.ToString());
             roomNumber++;
-        }
-    }
-
-    void DrawRoomNumbers(List<Room> rooms)
-    {
-        Handles.BeginGUI();
-        GUI.color = Color.white;
-        foreach (var room in rooms)
-        {
-            Handles.Label(
-                new UnityEngine.Vector2(room.rect.center.x - 3, room.rect.center.y + 3),
-                room.roomNumber.ToString()
-            );
-        }
-        Handles.EndGUI();
-    }
-
-    void DrawRoomConnectors(List<Room> rooms)
-    {
-        foreach (var room in rooms)
-        {
-            foreach (var connectedRoom in room.connectedTo)
-            {
-                if (room.layer == 3)
-                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.red);
-                if (room.layer == 2)
-                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.yellow);
-                if (room.layer == 1)
-                    Debug.DrawLine(room.rect.center, connectedRoom.rect.center, Color.magenta);
-            }
         }
     }
 
